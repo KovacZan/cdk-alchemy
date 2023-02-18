@@ -4,7 +4,7 @@ import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Duration } from "aws-cdk-lib";
 import { BigNumber, Network } from "alchemy-sdk";
 
-export interface WebhooksConstructProps {
+export interface NFTActivityProps {
     alchemyApiKey: string;
     alchemyNetwork: Network | string;
     alchemyAuthToken: string;
@@ -14,16 +14,16 @@ export interface WebhooksConstructProps {
 
 }
 
-export class WebhooksConstruct extends Construct {
+export class NFTActivityConstruct extends Construct {
 
-    public readonly description = "Lambda setting Alchemy Notify/Webhooks Functionality";
+    public readonly description = "Construct for NFT Activity Alchemy Notify/Webhook Functionality";
     public readonly functionDuration = Duration.minutes(15);
 
     public readonly func: NodejsFunction;
-    constructor(scope: Construct, id: string, private readonly props: WebhooksConstructProps) {
+    constructor(scope: Construct, id: string, private readonly props: NFTActivityProps) {
         super(scope, id);
 
-        this.func = new NodejsFunction(this, "WebhooksConstruct", {
+        this.func = new NodejsFunction(this, "NFTActivityLambda", {
             entry: path.resolve(__dirname, "Webhook.lambda.ts"),
             description: this.description,
             timeout: this.functionDuration,
