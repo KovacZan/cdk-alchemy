@@ -1,3 +1,1 @@
-import * as WebhookTrigger from "./WebhookTrigger";
-
-export { WebhookTrigger }
+export * from "./registers"
