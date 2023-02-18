@@ -1,4 +1,4 @@
-import { Alchemy, Network, WebhookType } from "alchemy-sdk";
+import { Network, WebhookType } from "alchemy-sdk";
 import { checkAppIdValidity, checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
 import { urlValidity } from "../../utils";
 import { getSSMParameterByName } from "../../ssm-utils";
@@ -29,7 +29,6 @@ const handler = async () => {
     if (isAlreadyCreated) {
         console.log("Webhook for this destination already created")
     } else {
-
         const response: DroppedTransactionWebhook = await alchemyInstance.notify
             // @ts-ignore
             .createWebhook(destinationUrl, WebhookType.DROPPED_TRANSACTION, {
