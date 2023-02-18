@@ -1,0 +1,38 @@
+import { Construct } from 'constructs';
+import * as path from "path";
+import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { Duration } from "aws-cdk-lib";
+import { Network } from "alchemy-sdk";
+
+export interface MinedTransactionsProps {
+    alchemyApiKey: string;
+    alchemyNetwork: Network | string;
+    alchemyAuthToken: string;
+    alchemyWebhookDestinationUrl: string;
+    alchemyAppId: string;
+}
+
+export class MinedTransactionsConstruct extends Construct {
+
+    public readonly description = "Construct for Mined Transactions Notifications Alchemy Notify/Webhook Functionality";
+    public readonly functionDuration = Duration.minutes(15);
+
+    public readonly func: NodejsFunction;
+    constructor(scope: Construct, id: string, private readonly props: MinedTransactionsProps) {
+        super(scope, id);
+
+        this.func = new NodejsFunction(this, "MinedTransactionsLambda", {
+            entry: path.resolve(__dirname, "MinedTransactions.lambda.ts"),
+            description: this.description,
+            timeout: this.functionDuration,
+            initialPolicy: [],
+            environment: {
+                ALCHEMY_APP_ID: this.props.alchemyAppId,
+                ALCHEMY_API_KEY: this.props.alchemyApiKey,
+                ALCHEMY_NETWORK: this.props.alchemyNetwork,
+                ALCHEMY_AUTH_TOKEN: this.props.alchemyAuthToken,
+                ALCHEMY_WEBHOOK_DESTINATION_URL: this.props.alchemyWebhookDestinationUrl,
+            }
+        });
+    }
+}
