@@ -12,4 +12,15 @@ async function storeSecret(path: string, alchemySecretObject: AlchemySecretObjec
     })
 }
 
-export { AlchemySecretObject, storeSecret }
+async function getSecret(path: string) {
+    const secretManager = new SecretsManager({});
+    const secrets = await secretManager.getSecretValue({
+        SecretId: path,
+    })
+    if (!secrets.SecretString) {
+        throw new Error("Secret doesn't exists!")
+    }
+    return JSON.parse(secrets.SecretString) as AlchemySecretObject
+}
+
+export { AlchemySecretObject, storeSecret, getSecret }
