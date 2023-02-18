@@ -4,7 +4,7 @@ import { checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
 import { getSecret } from "../../secrets-utils";
 import { SQSHandler } from "aws-lambda";
 
-interface NFTActivityRecord {
+interface AddressActivityRecord {
     filterType: "ADD" | "REMOVE";
     contractAddresses: string[];
 }
@@ -25,7 +25,7 @@ const handler: SQSHandler = async (event) => {
     const secret = await getSecret(path);
 
     for (const record of event.Records) { // TODO: TRY CATCH
-        const nftActivityRecord: NFTActivityRecord = JSON.parse(record.body);
+        const nftActivityRecord: AddressActivityRecord = JSON.parse(record.body);
 
         const webhooks = await alchemyInstance.notify.getAllWebhooks()
         const webhookInstance = webhooks.webhooks.find(webhook =>
