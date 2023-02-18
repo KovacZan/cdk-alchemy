@@ -1,7 +1,11 @@
 import { Alchemy, Network, WebhookType } from "alchemy-sdk";
+import { checkAppIdValidity, checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
+import { urlValidity } from "../../utils";
+import { getSSMParameterByName } from "../../ssm-utils";
+import { storeSecret } from "../../secrets-utils";
+import { DroppedTransactionWebhook } from "alchemy-sdk/dist/src/types/types";
 
 const handler = async () => {
-    // TODO: add validation
     const appId = process.env.ALCHEMY_APP_ID;
     const apiKey = process.env.ALCHEMY_API_KEY;
     const network = process.env.ALCHEMY_NETWORK as Network;
@@ -9,15 +13,11 @@ const handler = async () => {
 
     const destinationUrl = process.env.ALCHEMY_WEBHOOK_DESTINATION_URL;
 
-    if (!destinationUrl) { // TODO: check if valid url
-        throw new Error("Webhook Destination URL not provided!")
-    }
+    checkAppIdValidity(appId);
+    checkNetworkValidity(network, Object.values(Network))
+    urlValidity(destinationUrl);
 
-    const alchemyInstance = new Alchemy({
-        apiKey,
-        network,
-        authToken,
-    });
+    const alchemyInstance = initAlchemy(network, apiKey, authToken);
 
     const webhooks = await alchemyInstance.notify.getAllWebhooks()
     const isAlreadyCreated = webhooks.webhooks.some(webhook =>
@@ -29,11 +29,18 @@ const handler = async () => {
     if (isAlreadyCreated) {
         console.log("Webhook for this destination already created")
     } else {
-        // @ts-ignore
-        const response = await alchemyInstance.notify.createWebhook(destinationUrl, WebhookType.DROPPED_TRANSACTION, {
-            appId,
-        });
-        console.log(response) // TODO: store id and signing key to secret manager
+
+        const response: DroppedTransactionWebhook = await alchemyInstance.notify
+            // @ts-ignore
+            .createWebhook(destinationUrl, WebhookType.DROPPED_TRANSACTION, {
+                appId,
+            });
+        const path = await getSSMParameterByName(process.env.SSM_PATH_TO_SECRET!);
+
+        await storeSecret(path, {
+            WebhookId: response.id,
+            WebhookSigningKey: response.signingKey,
+        })
     }
 
 }
