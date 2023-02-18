@@ -25,7 +25,7 @@ const handler = async () => {
     const webhooks = await alchemyInstance.notify.getAllWebhooks()
     const isAlreadyCreated = webhooks.webhooks.some(webhook =>
         webhook.url === destinationUrl &&
-        webhook.network === Network.ETH_MAINNET &&
+        webhook.network === network &&
         webhook.type === WebhookType.NFT_ACTIVITY
     );
 
