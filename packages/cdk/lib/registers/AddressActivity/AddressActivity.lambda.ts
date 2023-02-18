@@ -1,23 +1,25 @@
-import { Alchemy, Network, WebhookType } from "alchemy-sdk";
+import { Network, WebhookType } from "alchemy-sdk";
+import { checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
+import { urlValidity } from "../../utils";
+import { getSSMParameterByName } from "../../ssm-utils";
+import { storeSecret } from "../../secrets-utils";
 
 const handler = async () => {
-    // TODO: add validation
     const apiKey = process.env.ALCHEMY_API_KEY;
     const network = process.env.ALCHEMY_NETWORK as Network;
     const authToken = process.env.ALCHEMY_AUTH_TOKEN;
 
-    const destinationUrl = process.env.ALCHEMY_WEBHOOK_DESTINATION_URL;
-    const contractAddress = process.env.ALCHEMY_CONTRACT_ADDRESS || "";
+    const destinationUrl = process.env.ALCHEMY_WEBHOOK_DESTINATION_URL!;
+    const contractAddress = process.env.ALCHEMY_CONTRACT_ADDRESS || ""; // TODO: add fake
 
-    if (!destinationUrl) { // TODO: check if valid url
-        throw new Error("Webhook Destination URL not provided!")
-    }
-
-    const alchemyInstance = new Alchemy({
-        apiKey,
-        network,
-        authToken,
-    });
+    checkNetworkValidity(network, [
+        Network.ETH_MAINNET, Network.ETH_GOERLI,
+        Network.MATIC_MAINNET, Network.MATIC_MUMBAI,
+        Network.ARB_MAINNET, Network.ARB_GOERLI,
+        Network.OPT_MAINNET, Network.OPT_GOERLI,
+    ])
+    urlValidity(destinationUrl);
+    const alchemyInstance = initAlchemy(network, apiKey, authToken);
 
     const webhooks = await alchemyInstance.notify.getAllWebhooks()
     const isAlreadyCreated = webhooks.webhooks.some(webhook =>
@@ -27,12 +29,18 @@ const handler = async () => {
     );
 
     if (isAlreadyCreated) {
-        console.log("Webhook for this destination already created")
+        console.log("Webhook for this destination and type already created")
     } else {
         const response = await alchemyInstance.notify.createWebhook(destinationUrl, WebhookType.ADDRESS_ACTIVITY, {
             addresses: [contractAddress]
         });
-        console.log(response) // TODO: store id and signing key to secret manager
+
+        const path = await getSSMParameterByName(process.env.SSM_PATH_TO_SECRET!);
+
+        await storeSecret(path, {
+            WebhookId: response.id,
+            WebhookSigningKey: response.signingKey,
+        })
     }
 
 }

@@ -1,6 +1,6 @@
 import { URL } from "url";
 
-export function isValidURL(url: string) {
+function isValidURL(url: string) {
     try {
         new URL(url);
         return true;
@@ -8,3 +8,11 @@ export function isValidURL(url: string) {
         return false;
     }
 }
+
+function urlValidity(url?: string) {
+    if (!isValidURL(url!)) {
+        throw new Error("ALCHEMY_WEBHOOK_DESTINATION_URL Env Variable is not valid!")
+    }
+}
+
+export { urlValidity, isValidURL }
