@@ -3,6 +3,10 @@ import * as path from "path";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Duration } from "aws-cdk-lib";
 import { BigNumber, Network } from "alchemy-sdk";
+import { PolicyStatement } from "aws-cdk-lib/aws-iam";
+import { StringParameter } from "aws-cdk-lib/aws-ssm";
+import { v4 as uuid } from "uuid";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
 
 export interface NFTActivityProps {
     alchemyApiKey: string;
@@ -12,6 +16,7 @@ export interface NFTActivityProps {
     alchemyContractAddress?: string;
     alchemyTokenId?: string | number | BigNumber;
 
+    ssmPathToRandomId?: string;
 }
 
 export class NFTActivityConstruct extends Construct {
@@ -20,14 +25,36 @@ export class NFTActivityConstruct extends Construct {
     public readonly functionDuration = Duration.minutes(15);
 
     public readonly func: NodejsFunction;
+
+    public ssmPathToRandomId = "/cdk-alchemy-webhooks/nft-activity/secret";
+    public secretIdSSM: StringParameter;
     constructor(scope: Construct, id: string, private readonly props: NFTActivityProps) {
         super(scope, id);
 
+        if (this.props.ssmPathToRandomId) {
+            this.ssmPathToRandomId = this.props.ssmPathToRandomId;
+        }
+
+        this.secretIdSSM= new StringParameter(this, "RandomIdStringParameter", {
+            stringValue: `${this.ssmPathToRandomId}/${uuid()}`,
+            parameterName: this.ssmPathToRandomId,
+        });
+
         this.func = new NodejsFunction(this, "NFTActivityLambda", {
-            entry: path.resolve(__dirname, "Webhook.lambda.ts"),
+            entry: path.resolve(__dirname, "NFTActivity.lambda.ts"),
             description: this.description,
             timeout: this.functionDuration,
-            initialPolicy: [],
+            runtime: Runtime.NODEJS_18_X,
+            initialPolicy: [
+                new PolicyStatement({
+                    actions: ["secretsmanager:CreateSecret"],
+                    resources: ["*"],
+                }),
+                new PolicyStatement({
+                    actions: ["ssm:GetParameter*"],
+                    resources: ["*"], // TODO
+                })
+            ],
             environment: {
                 ALCHEMY_API_KEY: this.props.alchemyApiKey,
                 ALCHEMY_NETWORK: this.props.alchemyNetwork,
@@ -35,6 +62,8 @@ export class NFTActivityConstruct extends Construct {
                 ALCHEMY_WEBHOOK_DESTINATION_URL: this.props.alchemyWebhookDestinationUrl,
                 ALCHEMY_CONTRACT_ADDRESS: this.props.alchemyContractAddress!, // TODO: adjust
                 ALCHEMY_TOKEN_ID: this.props.alchemyTokenId!.toString(), // TODO: adjust
+
+                SSM_PATH_TO_SECRET: this.secretIdSSM.parameterName,
             }
         });
     }
