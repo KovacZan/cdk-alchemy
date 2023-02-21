@@ -4,8 +4,12 @@ import { DroppedTransactionsRegister, DroppedTransactionsInitializer } from "./D
 import { MinedTransactionsRegister, MinedTransactionsInitializer } from "./MinedTransactions";
 
 export {
-    NFTActivityRegister, NFTActivityInitializer,
-    AddressActivityRegister, AddressActivityInitializer,
-    DroppedTransactionsRegister, DroppedTransactionsInitializer,
-    MinedTransactionsRegister, MinedTransactionsInitializer
-}
+	NFTActivityRegister,
+	NFTActivityInitializer,
+	AddressActivityRegister,
+	AddressActivityInitializer,
+	DroppedTransactionsRegister,
+	DroppedTransactionsInitializer,
+	MinedTransactionsRegister,
+	MinedTransactionsInitializer
+};
