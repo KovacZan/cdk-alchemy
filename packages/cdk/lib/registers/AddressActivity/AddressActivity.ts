@@ -23,7 +23,7 @@ export class AddressActivityConstruct extends Construct {
 
 	public readonly func: NodejsFunction;
 
-	public ssmPathToRandomId = "/cdk-alchemy-webhooks/nft-activity/secret";
+	public ssmPathToRandomId = "/cdk-alchemy-webhooks/address-activity/secret";
 	public secretIdSSM: StringParameter;
 	constructor(scope: Construct, id: string, private readonly props: AddressActivityProps) {
 		super(scope, id);
