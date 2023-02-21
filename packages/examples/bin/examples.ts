@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 import "source-map-support/register";
 import * as cdk from "aws-cdk-lib";
+
 import { NFTActivityStack } from "../lib/Initializers/NFTActivityStack";
 import { AddressActivityStack } from "../lib/Initializers/AddressActivityStack";
 import { DroppedTransactionsStack } from "../lib/Initializers/DroppedTransactionsStack";
 import { MinedTransactionsStack } from "../lib/Initializers/MinedTransactionsStack";
+
+import { NFTActivityQueueStack } from "../lib/queues/NFTActivityStack";
 
 import * as dotenv from "dotenv";
 
@@ -48,4 +51,13 @@ new MinedTransactionsStack(app, "MinedTransactionsStack", {
 	alchemyApiKey: process.env.ALCHEMY_API_KEY!,
 	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!,
 	alchemyAppId: process.env.ALCHEMY_APP_ID!
+});
+
+new NFTActivityQueueStack(app, "NFTActivityQueueStack", {
+	env: {
+		account: process.env.CDK_DEFAULT_ACCOUNT,
+		region: process.env.CDK_DEFAULT_REGION
+	},
+	alchemyApiKey: process.env.ALCHEMY_API_KEY!,
+	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!
 });
