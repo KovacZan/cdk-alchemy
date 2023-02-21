@@ -2,15 +2,16 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import { NFTActivityInitializer } from "cdk-alchemy-webhooks";
 
-interface ExampleStackProps extends cdk.StackProps {
+interface NFTActivityStackProps extends cdk.StackProps {
   alchemyApiKey: string;
   alchemyAuthToken: string;
 }
-export class ExamplesStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props: ExampleStackProps) {
+
+export class NFTActivityStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, props: NFTActivityStackProps) {
     super(scope, id, props);
 
-    new NFTActivityInitializer(this, "NFTActivityInitializerExample", {
+    new NFTActivityInitializer(this, "NFTActivityExample", {
       alchemyApiKey: props.alchemyApiKey,
       alchemyNetwork: "eth-mainnet",
       alchemyAuthToken: props.alchemyAuthToken,
