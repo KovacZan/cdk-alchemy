@@ -16,7 +16,7 @@ export class AddressActivityStack extends cdk.Stack {
 			alchemyNetwork: "eth-mainnet",
 			alchemyAuthToken: props.alchemyAuthToken,
 			alchemyWebhookDestinationUrl: "https://www.google.com",
-			alchemyContractAddress: "0x026224A2940bFE258D0dbE947919B62fE321F042",
+			alchemyContractAddress: "0x026224A2940bFE258D0dbE947919B62fE321F042"
 		});
 	}
 }
