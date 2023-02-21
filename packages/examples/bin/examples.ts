@@ -4,6 +4,7 @@ import * as cdk from "aws-cdk-lib";
 import { NFTActivityStack } from "../lib/Initializers/NFTActivityStack";
 import { AddressActivityStack } from "../lib/Initializers/AddressActivityStack";
 import { DroppedTransactionsStack } from "../lib/Initializers/DroppedTransactionsStack";
+import { MinedTransactionsStack } from "../lib/Initializers/MinedTransactionsStack";
 
 import * as dotenv from "dotenv";
 
@@ -30,6 +31,16 @@ new AddressActivityStack(app, "AddressActivityStack", {
 });
 
 new DroppedTransactionsStack(app, "DroppedTransactionsStack", {
+	env: {
+		account: process.env.CDK_DEFAULT_ACCOUNT,
+		region: process.env.CDK_DEFAULT_REGION
+	},
+	alchemyApiKey: process.env.ALCHEMY_API_KEY!,
+	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!,
+	alchemyAppId: process.env.ALCHEMY_APP_ID!
+});
+
+new MinedTransactionsStack(app, "MinedTransactionsStack", {
 	env: {
 		account: process.env.CDK_DEFAULT_ACCOUNT,
 		region: process.env.CDK_DEFAULT_REGION
