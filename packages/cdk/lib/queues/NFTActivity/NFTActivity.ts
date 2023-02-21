@@ -16,7 +16,7 @@ export interface NFTActivityProps {
 export class NFTActivityConstruct extends Construct {
 	public readonly description =
 		"Construct for NFT Activity Alchemy Notify/Webhook Functionality, containing Queue Lambda Implementation";
-	public readonly functionDuration = Duration.minutes(15);
+	public readonly functionDuration = Duration.seconds(30);
 
 	public readonly func: NodejsFunction;
 
