@@ -16,7 +16,7 @@ export interface AddressActivityProps {
 export class AddressActivityConstruct extends Construct {
 	public readonly description =
 		"Construct for Address Activity Alchemy Notify/Webhook Functionality, containing Queue Lambda Implementation";
-	public readonly functionDuration = Duration.minutes(15);
+	public readonly functionDuration = Duration.seconds(30);
 
 	public readonly func: NodejsFunction;
 
