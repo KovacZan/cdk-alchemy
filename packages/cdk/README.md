@@ -1,12 +1,13 @@
-# Welcome to your CDK TypeScript Construct Library project
+# CDK Alchemy Webhooks
 
-You should explore the contents of this project. It demonstrates a CDK Construct Library that includes a construct (`CdkAlchemyWebhooks`)
-which contains an Amazon SQS queue that is subscribed to an Amazon SNS topic.
+AWS CDK Library for interaction with Alchemy Notify API
 
-The construct defines an interface (`CdkAlchemyWebhooksProps`) to configure the visibility timeout of the queue.
+> :warning: **This package is still under development!**
 
-## Useful commands
+## Useful commands for development
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
+* `pnpm run build`   compile typescript to js
+* `pnpm run watch`   watch for changes and compile
+* `pnpm run test`    perform the jest unit tests
+* `pnpm run lint`    run eslint across this package
+* `pnpm run format`  apply prettier format
