@@ -1,5 +1,5 @@
 {
-	"name": "@kovi/cdk-alchemy-webhooks",
+	"name": "@kovi-soft/cdk-alchemy-webhooks",
 	"version": "1.0.0-beta.1",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
