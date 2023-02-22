@@ -38,7 +38,7 @@ export class AddressActivityConstruct extends Construct {
 		});
 
 		this.func = new NodejsFunction(this, "AddressActivityLambda", {
-			entry: path.resolve(__dirname, "AddressActivity.lambda.ts"),
+			entry: path.resolve(__dirname, "AddressActivity.lambda.js"),
 			description: this.description,
 			timeout: this.functionDuration,
 			runtime: Runtime.NODEJS_18_X,

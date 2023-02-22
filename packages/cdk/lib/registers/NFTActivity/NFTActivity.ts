@@ -40,7 +40,7 @@ export class NFTActivityConstruct extends Construct {
 		});
 
 		this.func = new NodejsFunction(this, "NFTActivityLambda", {
-			entry: path.resolve(__dirname, "NFTActivity.lambda.ts"),
+			entry: path.resolve(__dirname, "NFTActivity.lambda.js"),
 			description: this.description,
 			timeout: this.functionDuration,
 			runtime: Runtime.NODEJS_18_X,

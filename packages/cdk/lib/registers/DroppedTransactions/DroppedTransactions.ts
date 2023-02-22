@@ -38,7 +38,7 @@ export class DroppedTransactionsConstruct extends Construct {
 		});
 
 		this.func = new NodejsFunction(this, "DroppedTransactionsLambda", {
-			entry: path.resolve(__dirname, "DroppedTransactions.lambda.ts"),
+			entry: path.resolve(__dirname, "DroppedTransactions.lambda.js"),
 			description: this.description,
 			timeout: this.functionDuration,
 			runtime: Runtime.NODEJS_18_X,

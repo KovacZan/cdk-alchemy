@@ -37,7 +37,7 @@ export class MinedTransactionsConstruct extends Construct {
 		});
 
 		this.func = new NodejsFunction(this, "MinedTransactionsLambda", {
-			entry: path.resolve(__dirname, "MinedTransactions.lambda.ts"),
+			entry: path.resolve(__dirname, "MinedTransactions.lambda.js"),
 			description: this.description,
 			timeout: this.functionDuration,
 			runtime: Runtime.NODEJS_18_X,
