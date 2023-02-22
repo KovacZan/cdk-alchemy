@@ -8,6 +8,7 @@ import { DroppedTransactionsStack } from "../lib/Initializers/DroppedTransaction
 import { MinedTransactionsStack } from "../lib/Initializers/MinedTransactionsStack";
 
 import { NFTActivityQueueStack } from "../lib/queues/NFTActivityStack";
+import { AddressActivityQueueStack } from "../lib/queues/AddressActivityStack";
 
 import * as dotenv from "dotenv";
 
@@ -61,3 +62,13 @@ new NFTActivityQueueStack(app, "NFTActivityQueueStack", {
 	alchemyApiKey: process.env.ALCHEMY_API_KEY!,
 	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!
 });
+
+new AddressActivityQueueStack(app, "AddressActivityQueueStack", {
+	env: {
+		account: process.env.CDK_DEFAULT_ACCOUNT,
+		region: process.env.CDK_DEFAULT_REGION
+	},
+	alchemyApiKey: process.env.ALCHEMY_API_KEY!,
+	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!
+});
+
