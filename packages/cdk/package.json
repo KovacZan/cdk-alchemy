@@ -1,8 +1,13 @@
 {
-	"name": "cdk-alchemy-webhooks",
-	"version": "0.1.0",
+	"name": "@kovi/cdk-alchemy-webhooks",
+	"version": "1.0.0-beta.1",
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
+	"license": "MIT",
+	"author": {
+		"name": "Žan Kovač",
+		"url": "https://github.com/KovacZan"
+	},
 	"scripts": {
 		"build": "tsc",
 		"watch": "tsc -w",
