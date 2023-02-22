@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { DroppedTransactionsInitializer } from "cdk-alchemy-webhooks";
+import { DroppedTransactionsInitializer } from "@kovi-soft/cdk-alchemy-webhooks";
 
 interface DroppedTransactionsStackProps extends cdk.StackProps {
 	alchemyApiKey: string;

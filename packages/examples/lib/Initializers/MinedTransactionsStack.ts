@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { MinedTransactionsInitializer } from "cdk-alchemy-webhooks";
+import { MinedTransactionsInitializer } from "@kovi-soft/cdk-alchemy-webhooks";
 
 interface MinedTransactionsStackProps extends cdk.StackProps {
 	alchemyApiKey: string;

@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { NFTActivityQueue } from "cdk-alchemy-webhooks";
+import { NFTActivityQueue } from "@kovi-soft/cdk-alchemy-webhooks";
 
 interface NFTActivityQueueStackProps extends cdk.StackProps {
 	alchemyApiKey: string;

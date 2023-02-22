@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { AddressActivityQueue } from "cdk-alchemy-webhooks";
+import { AddressActivityQueue } from "@kovi-soft/cdk-alchemy-webhooks";
 
 interface AddressActivityQueueStackProps extends cdk.StackProps {
 	alchemyApiKey: string;
