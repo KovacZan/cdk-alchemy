@@ -14,8 +14,8 @@ some pages have danger signs, to be careful using it before its finished.
 ## Current Implementation
 
 Currently, there are two main implemented Construct types:
-- Initializers - allowing you to provision initial webhook setup
-- Queues - providing you the ability to easily update Webhooks in "Runtime"
+- **Initializers** - allowing you to provision initial webhook setup
+- **Queues** - providing you the ability to easily update Webhooks in "Runtime"
 
 Underneath we use a few AWS Services, such as CDK, SSM, SQS, Lambda, SecretManager, but 
 plan to add more flexibility to the library, with ability to pick your favourite service,
