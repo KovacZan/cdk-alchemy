@@ -35,8 +35,8 @@ const handler: SQSHandler = async event => {
 		const webhooks = await alchemyInstance.notify.getAllWebhooks();
 		const webhookInstance = webhooks.webhooks.find(
 			webhook =>
-				webhook.network === Network.ETH_MAINNET &&
-				webhook.type === WebhookType.NFT_ACTIVITY &&
+				webhook.network === network &&
+				webhook.type === WebhookType.ADDRESS_ACTIVITY &&
 				webhook.id === secret.WebhookId
 		);
 
