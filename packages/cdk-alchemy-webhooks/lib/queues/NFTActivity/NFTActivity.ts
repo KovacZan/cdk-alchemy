@@ -35,7 +35,7 @@ export class NFTActivityConstruct extends Construct {
 			runtime: Runtime.NODEJS_18_X,
 			initialPolicy: [
 				new PolicyStatement({
-					actions: ["secretsmanager:CreateSecret"],
+					actions: ["secretsmanager:GetSecretValue"],
 					resources: ["*"]
 				}),
 				new PolicyStatement({
