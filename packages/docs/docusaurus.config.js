@@ -58,15 +58,26 @@ const config = {
         ],
     ],
 
-    plugins: [[
-        '@docusaurus/plugin-content-docs',
-        {
-            id: 'alchemy-webhooks',
-            path: 'alchemy-webhooks',
-            routeBasePath: 'alchemy-webhooks',
-            sidebarPath: require.resolve('./sidebars.js'),
-        },
-    ]],
+    plugins: [
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'alchemy-webhooks',
+                path: 'alchemy-webhooks',
+                routeBasePath: 'alchemy-webhooks',
+                sidebarPath: require.resolve('./sidebars.js'),
+            },
+        ],
+        [
+            '@docusaurus/plugin-content-docs',
+            {
+                id: 'alchemy-integrator',
+                path: 'alchemy-integrator',
+                routeBasePath: 'alchemy-integrator',
+                sidebarPath: require.resolve('./sidebars.js'),
+            },
+        ]
+    ],
 
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -81,6 +92,7 @@ const config = {
                 },
                 items: [
                     {to: '/alchemy-webhooks/intro', label: 'Alchemy Webhooks', position: 'left'},
+                    {to: '/alchemy-integrator/intro', label: 'Alchemy Integrator', position: 'left'},
                     // {
                     //     type: 'doc',
                     //     docId: 'intro',
