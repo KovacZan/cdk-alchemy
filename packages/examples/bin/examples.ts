@@ -10,7 +10,10 @@ import { MinedTransactionsStack } from "../lib/Initializers/MinedTransactionsSta
 import { NFTActivityQueueStack } from "../lib/queues/NFTActivityStack";
 import { AddressActivityQueueStack } from "../lib/queues/AddressActivityStack";
 
+import { DiscordIntegratorStack } from "../lib/Integrator/DiscordIntegratorStack";
+
 import * as dotenv from "dotenv";
+import * as process from "process";
 
 dotenv.config();
 
@@ -72,3 +75,11 @@ new AddressActivityQueueStack(app, "AddressActivityQueueStack", {
 	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!
 });
 
+new DiscordIntegratorStack(app, "DiscordIntegratorStack", {
+	env: {
+		account: process.env.CDK_DEFAULT_ACCOUNT,
+		region: process.env.CDK_DEFAULT_REGION
+	},
+	alchemySigningKey: process.env.ALCHEMY_SIGNING_KEY!,
+	discordWebhookUrl: process.env.DISCORD_WEBHOOK_URL!,
+});
