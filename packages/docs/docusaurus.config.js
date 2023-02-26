@@ -18,8 +18,8 @@ const config = {
 
     // GitHub pages deployment config.
     // If you aren't using GitHub pages, you don't need these.
-    organizationName: 'facebook', // Usually your GitHub org/user name.
-    projectName: 'docusaurus', // Usually your repo name.
+    organizationName: 'KovacZan', // Usually your GitHub org/user name.
+    projectName: 'cdk-alchemy', // Usually your repo name.
 
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
@@ -39,13 +39,6 @@ const config = {
             ({
                 docs: {
                     sidebarPath: require.resolve('./sidebars.js'),
-                    // Please change this to your repo.
-                    // Remove this to remove the "edit this page" links.
-                    editUrl:
-                        'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
-                },
-                blog: {
-                    showReadingTime: true,
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl:
@@ -87,21 +80,14 @@ const config = {
             navbar: {
                 title: 'Alchemy CDK',
                 logo: {
-                    alt: 'My Site Logo',
+                    alt: 'Alchemy CDK Logo',
                     src: 'img/logo.svg',
                 },
                 items: [
                     {to: '/alchemy-webhooks/intro', label: 'Alchemy Webhooks', position: 'left'},
                     {to: '/alchemy-integrator/intro', label: 'Alchemy Integrator', position: 'left'},
-                    // {
-                    //     type: 'doc',
-                    //     docId: 'intro',
-                    //     position: 'left',
-                    //     label: 'Tutorial',
-                    // },
-                    // {to: '/blog', label: 'Blog', position: 'left'},
                     {
-                        href: 'https://github.com/facebook/docusaurus',
+                        href: 'https://github.com/KovacZan/cdk-alchemy',
                         label: 'GitHub',
                         position: 'right',
                     },
@@ -114,8 +100,12 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: 'Tutorial',
-                                to: '/docs/intro',
+                                label: 'CDK Alchemy Webhooks',
+                                to: '/alchemy-webhooks/intro',
+                            },
+                            {
+                                label: 'CDK Alchemy Integrator',
+                                to: '/alchemy-integrator/intro',
                             },
                         ],
                     },
@@ -123,16 +113,16 @@ const config = {
                         title: 'Community',
                         items: [
                             {
-                                label: 'Stack Overflow',
-                                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                                label: 'Discussions',
+                                href: 'https://github.com/KovacZan/cdk-alchemy/discussions',
                             },
                             {
-                                label: 'Discord',
-                                href: 'https://discordapp.com/invite/docusaurus',
+                                label: 'Issues',
+                                href: 'https://github.com/KovacZan/cdk-alchemy/issues',
                             },
                             {
                                 label: 'Twitter',
-                                href: 'https://twitter.com/docusaurus',
+                                href: 'https://twitter.com/zan_kovi',
                             },
                         ],
                     },
@@ -140,12 +130,8 @@ const config = {
                         title: 'More',
                         items: [
                             {
-                                label: 'Blog',
-                                to: '/blog',
-                            },
-                            {
                                 label: 'GitHub',
-                                href: 'https://github.com/facebook/docusaurus',
+                                href: 'https://github.com/KovacZan/cdk-alchemy',
                             },
                         ],
                     },
