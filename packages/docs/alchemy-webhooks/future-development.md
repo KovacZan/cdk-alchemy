@@ -27,7 +27,7 @@ you will have an option to do so.
 ## Future Features and Improvements
 
 As mentioned above we want to polish the module even after the competition ends.
-We will polish some out some of already implemented features as well as adding more
+We will polish out some of already implemented features as well as adding more
 flexibility to certain parts of this library. That way end users (developers) will
 have all options to choose or replace certain parts with their own implementations.
 
@@ -37,3 +37,4 @@ have all options to choose or replace certain parts with their own implementatio
 - Add S3 support, for adapters
 - Polish the existing functionality and add more abstraction, while also exposing all
 necessary configurable parameters to the developer
+- Tests, tests and TESTS
