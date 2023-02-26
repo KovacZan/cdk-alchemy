@@ -1,0 +1,8 @@
+{
+  "label": "Constructs",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Learn about each and every construct CDK Alchemy Integrator provides and how to provision them."
+  }
+}
