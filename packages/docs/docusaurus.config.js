@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
     title: 'Alchemy CDK',
-    tagline: 'Dinosaurs are cool',
+    tagline: 'Built by Developers for Developers',
     favicon: 'img/favicon.ico',
 
     // Set the production url of your site here
@@ -82,7 +82,7 @@ const config = {
                 title: 'Alchemy CDK',
                 logo: {
                     alt: 'Alchemy CDK Logo',
-                    src: 'img/logo.svg',
+                    src: 'img/logo.png',
                 },
                 items: [
                     {to: '/alchemy-webhooks/intro', label: 'Alchemy Webhooks', position: 'left'},
@@ -137,7 +137,7 @@ const config = {
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} Alchemy CDK`,
+                copyright: `Copyright © ${new Date().getFullYear()}`,
             },
             prism: {
                 theme: lightCodeTheme,

@@ -11,7 +11,7 @@ for your applications.
 With CDK Alchemy Webhooks, you can easily integrate the power of Alchemy into your Cloud infrastructure,
 with just a few lines of code.
 
-## Use cases
+## Use Cases
 
 Whether you're building a fintech application, a gaming platform, or a supply chain solution,
 CDK Alchemy Webhooks can help you achieve your goals with speed and reliability. 
