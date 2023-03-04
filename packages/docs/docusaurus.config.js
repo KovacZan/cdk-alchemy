@@ -1,6 +1,8 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
+require('dotenv').config();
+
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
@@ -70,7 +72,14 @@ const config = {
                 routeBasePath: 'alchemy-integrator',
                 sidebarPath: require.resolve('./sidebars.js'),
             },
-        ]
+        ],
+        [
+            '@docusaurus/plugin-google-gtag',
+            {
+                trackingID: process.env.GOOGLE_TRACKING_ID,
+                anonymizeIP: false,
+            },
+        ],
     ],
 
     themeConfig:
