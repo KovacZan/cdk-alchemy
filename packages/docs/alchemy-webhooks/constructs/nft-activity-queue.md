@@ -31,7 +31,7 @@ new NFTActivityQueue(this, "NFTActivityQueueExample", {
 
 You can execute `NFTActivity` Queue from other AWS Services or you can try it out via AWS Console.
 
-![Queue Usage Via AWS Console](./img/image1.png)
+![Queue Usage Via AWS Console](./img/Image1.png)
 
 ## Interface
 

@@ -30,7 +30,7 @@ new AddressActivityQueue(this, "AddressActivityQueueExample", {
 
 You can execute `AddressActivity` Queue from other AWS Services or you can try it out via AWS Console.
 
-![Queue Usage Via AWS Console](./img/image2.png)
+![Queue Usage Via AWS Console](./img/Image2.png)
 
 ## Interface
 
