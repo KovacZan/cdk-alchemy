@@ -6,9 +6,9 @@ sidebar_position: 1
 
 Are you looking for a powerful way to integrate your Alchemy Webhooks
 with popular chat platforms like Discord and Slack? 
-Look no further than the CDK Alchemy Integrator!
+Look no further than the CDK Alchy Integrator!
 
-CDK Alchemy Integrator gives you a middleware between Alchemy Webhooks 
+CDK Alchy Integrator gives you a middleware between Alchemy Webhooks 
 and your favorite messaging application. Giving you the ability to easily
 send notifications based on various blockchain events.
 

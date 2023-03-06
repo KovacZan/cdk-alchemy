@@ -4,11 +4,11 @@ sidebar_position: 1
 
 # Introduction
 
-Introducing CDK Alchemy Webhooks, a powerful library that leverages the capabilities 
+Introducing CDK Alchy Webhooks, a powerful library that leverages the capabilities 
 of AWS and its CloudFormation service to provide a flexible and scalable infrastructure
 for your applications. 
 
-With CDK Alchemy Webhooks, you can easily integrate the power of Alchemy into your Cloud infrastructure,
+With CDK Alchy Webhooks, you can easily integrate the power of Alchemy into your Cloud infrastructure,
 with just a few lines of code.
 
 ## Use Cases
@@ -27,7 +27,7 @@ CDK Alchemy Webhooks is built around two main constructs:
 ### Initializers
 
 Allow you to set up webhooks while provisioning your resources, 
-so you can automatically setup Alchemy Notify Webhook when you are provisioning for various environments. 
+so you can automatically set up Alchemy Notify Webhook when you are provisioning for various environments. 
 You can Initialize Webhooks which Alchemy provides:
 - NFT Activity
 - Address Activity
@@ -38,7 +38,7 @@ You can Initialize Webhooks which Alchemy provides:
 
 Queues, on the other hand, enable you to adjust your application at runtime, 
 by providing a simple way to execute specific update when needed.
-CDK Alchemy Webhooks provides two Queues you can execute:
+CDK Alchy Webhooks provides two Queues you can execute:
 - Update NFT Activity
 - Update Address Activity
 

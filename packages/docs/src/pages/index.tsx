@@ -17,16 +17,16 @@ function HomepageHeader() {
                 <div className={styles.buttons}>
                     <Link
                         className="button button--secondary button--lg"
-                        to="/alchemy-webhooks/intro">
-                        Alchemy Webhooks
+                        to="/alchy-webhooks/intro">
+                        Alchy Webhooks
                     </Link>
                 </div>
                 <br/>
                 <div className={styles.buttons}>
                     <Link
                         className="button button--secondary button--lg"
-                        to="/alchemy-integrator/intro">
-                        Alchemy Integrator
+                        to="/alchy-integrator/intro">
+                        Alchy Integrator
                     </Link>
                 </div>
             </div>
@@ -39,7 +39,7 @@ export default function Home(): JSX.Element {
     return (
         <Layout
             title={`Hello from ${siteConfig.title}`}
-            description="Alchemy CDK">
+            description="alchy CDK">
             <HomepageHeader/>
             <main>
                 <HomepageFeatures/>

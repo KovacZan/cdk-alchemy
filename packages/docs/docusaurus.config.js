@@ -8,12 +8,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-    title: 'Alchemy CDK',
+    title: 'Alchy CDK',
     tagline: 'Built by Developers for Developers',
     favicon: 'img/favicon.ico',
 
     // Set the production url of your site here
-    url: 'https://your-docusaurus-test-site.com',
+    url: 'https://cdk-alchemy.vercel.app/',
     // Set the /<baseUrl>/ pathname under which your site is served
     // For GitHub pages deployment, it is often '/<projectName>/'
     baseUrl: '/',
@@ -58,18 +58,18 @@ const config = {
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'alchemy-webhooks',
-                path: 'alchemy-webhooks',
-                routeBasePath: 'alchemy-webhooks',
+                id: 'alchy-webhooks',
+                path: 'alchy-webhooks',
+                routeBasePath: 'alchy-webhooks',
                 sidebarPath: require.resolve('./sidebars.js'),
             },
         ],
         [
             '@docusaurus/plugin-content-docs',
             {
-                id: 'alchemy-integrator',
-                path: 'alchemy-integrator',
-                routeBasePath: 'alchemy-integrator',
+                id: 'alchy-integrator',
+                path: 'alchy-integrator',
+                routeBasePath: 'alchy-integrator',
                 sidebarPath: require.resolve('./sidebars.js'),
             },
         ],
@@ -88,14 +88,14 @@ const config = {
             // Replace with your project's social card
             image: 'img/docusaurus-social-card.jpg',
             navbar: {
-                title: 'Alchemy CDK',
+                title: 'Alchy CDK',
                 logo: {
-                    alt: 'Alchemy CDK Logo',
-                    src: 'img/logo.png',
+                    alt: 'Alchy CDK Logo',
+                    src: 'img/logo.svg',
                 },
                 items: [
-                    {to: '/alchemy-webhooks/intro', label: 'Alchemy Webhooks', position: 'left'},
-                    {to: '/alchemy-integrator/intro', label: 'Alchemy Integrator', position: 'left'},
+                    {to: '/alchy-webhooks/intro', label: 'Alchy Webhooks', position: 'left'},
+                    {to: '/alchy-integrator/intro', label: 'Alchy Integrator', position: 'left'},
                     {
                         href: 'https://github.com/KovacZan/cdk-alchemy',
                         label: 'GitHub',
@@ -110,12 +110,12 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: 'CDK Alchemy Webhooks',
-                                to: '/alchemy-webhooks/intro',
+                                label: 'CDK Alchy Webhooks',
+                                to: '/alchy-webhooks/intro',
                             },
                             {
-                                label: 'CDK Alchemy Integrator',
-                                to: '/alchemy-integrator/intro',
+                                label: 'CDK Alchy Integrator',
+                                to: '/alchy-integrator/intro',
                             },
                         ],
                     },
