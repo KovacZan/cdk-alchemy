@@ -134,11 +134,19 @@ const config = {
                                 label: 'Twitter',
                                 href: 'https://twitter.com/zan_kovi',
                             },
+                            {
+                                label: 'Protokol Twitter',
+                                href: 'https://twitter.com/HelloProtokol',
+                            },
                         ],
                     },
                     {
                         title: 'More',
                         items: [
+                            {
+                                label: 'Protokol',
+                                href: 'https://www.protokol.com/insights/protokol-developer-wins-alchemy-sdk-challenge/',
+                            },
                             {
                                 label: 'GitHub',
                                 href: 'https://github.com/KovacZan/cdk-alchemy',
