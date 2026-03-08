@@ -81,5 +81,5 @@ new DiscordIntegratorStack(app, "DiscordIntegratorStack", {
 		region: process.env.CDK_DEFAULT_REGION
 	},
 	alchemySigningKey: process.env.ALCHEMY_SIGNING_KEY!,
-	discordWebhookUrl: process.env.DISCORD_WEBHOOK_URL!,
+	discordWebhookUrl: process.env.DISCORD_WEBHOOK_URL!
 });

@@ -27,7 +27,11 @@ export class NFTActivityConstruct extends Construct {
 
 	public ssmPathToRandomId = "/cdk-alchemy-webhooks/nft-activity/secret";
 	public secretIdSSM: StringParameter;
-	constructor(scope: Construct, id: string, private readonly props: NFTActivityProps) {
+	constructor(
+		scope: Construct,
+		id: string,
+		private readonly props: NFTActivityProps
+	) {
 		super(scope, id);
 
 		if (this.props.ssmPathToRandomId) {

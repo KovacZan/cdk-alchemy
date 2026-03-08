@@ -5,5 +5,5 @@
   "keywords": [],
   "author": "Žan Kovač",
   "license": "MIT",
-  "packageManager": "^pnpm@7.11.0"
+  "packageManager": "pnpm@10.18.2"
 }

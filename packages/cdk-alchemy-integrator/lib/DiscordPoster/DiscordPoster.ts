@@ -23,7 +23,11 @@ export class DiscordPosterConstruct extends Construct {
 
 	public ssmPath = "/cdk-alchemy-integrator/discord/ssm-path";
 	public ssm: StringParameter;
-	constructor(scope: Construct, id: string, private readonly props: DiscordPosterProps) {
+	constructor(
+		scope: Construct,
+		id: string,
+		private readonly props: DiscordPosterProps
+	) {
 		super(scope, id);
 
 		if (this.props.ssmPath) {

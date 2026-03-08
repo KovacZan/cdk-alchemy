@@ -13,7 +13,11 @@ export class NFTActivityQueueConstruct extends Construct {
 	public readonly queue: Queue;
 	public readonly nftActivity: NFTActivityConstruct;
 
-	constructor(scope: Construct, id: string, private readonly props: NFTActivityQueueProps) {
+	constructor(
+		scope: Construct,
+		id: string,
+		private readonly props: NFTActivityQueueProps
+	) {
 		super(scope, id);
 
 		this.nftActivity = new NFTActivityConstruct(scope, "NFTActivityConstruct", this.props.nftActivityProps);
