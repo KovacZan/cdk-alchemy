@@ -24,7 +24,11 @@ export class MinedTransactionsConstruct extends Construct {
 	public readonly func: NodejsFunction;
 	public ssmPathToRandomId = "/cdk-alchemy-webhooks/mined-transactions/secret";
 	public secretIdSSM: StringParameter;
-	constructor(scope: Construct, id: string, private readonly props: MinedTransactionsProps) {
+	constructor(
+		scope: Construct,
+		id: string,
+		private readonly props: MinedTransactionsProps
+	) {
 		super(scope, id);
 
 		if (this.props.ssmPathToRandomId) {

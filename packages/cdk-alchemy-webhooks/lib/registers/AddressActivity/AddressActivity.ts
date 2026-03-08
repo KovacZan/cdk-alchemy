@@ -25,7 +25,11 @@ export class AddressActivityConstruct extends Construct {
 
 	public ssmPathToRandomId = "/cdk-alchemy-webhooks/address-activity/secret";
 	public secretIdSSM: StringParameter;
-	constructor(scope: Construct, id: string, private readonly props: AddressActivityProps) {
+	constructor(
+		scope: Construct,
+		id: string,
+		private readonly props: AddressActivityProps
+	) {
 		super(scope, id);
 
 		if (this.props.ssmPathToRandomId) {

@@ -25,7 +25,11 @@ export class DroppedTransactionsConstruct extends Construct {
 	public readonly func: NodejsFunction;
 	public ssmPathToRandomId = "/cdk-alchemy-webhooks/dropped-transactions/secret";
 	public secretIdSSM: StringParameter;
-	constructor(scope: Construct, id: string, private readonly props: DroppedTransactionsProps) {
+	constructor(
+		scope: Construct,
+		id: string,
+		private readonly props: DroppedTransactionsProps
+	) {
 		super(scope, id);
 
 		if (this.props.ssmPathToRandomId) {

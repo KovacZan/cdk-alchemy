@@ -12,7 +12,11 @@ export class AddressActivityQueueConstruct extends Construct {
 	public readonly queue: Queue;
 	public readonly addressActivity: AddressActivityConstruct;
 
-	constructor(scope: Construct, id: string, private readonly props: AddressActivityQueueProps) {
+	constructor(
+		scope: Construct,
+		id: string,
+		private readonly props: AddressActivityQueueProps
+	) {
 		super(scope, id);
 
 		this.addressActivity = new AddressActivityConstruct(
