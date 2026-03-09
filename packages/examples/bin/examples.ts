@@ -7,8 +7,6 @@ import { AddressActivityStack } from "../lib/Initializers/AddressActivityStack";
 import { DroppedTransactionsStack } from "../lib/Initializers/DroppedTransactionsStack";
 import { MinedTransactionsStack } from "../lib/Initializers/MinedTransactionsStack";
 
-import { NFTActivityQueueStack } from "../lib/queues/NFTActivityStack";
-import { AddressActivityQueueStack } from "../lib/queues/AddressActivityStack";
 
 import { DiscordIntegratorStack } from "../lib/Integrator/DiscordIntegratorStack";
 
@@ -57,23 +55,6 @@ new MinedTransactionsStack(app, "MinedTransactionsStack", {
 	alchemyAppId: process.env.ALCHEMY_APP_ID!
 });
 
-new NFTActivityQueueStack(app, "NFTActivityQueueStack", {
-	env: {
-		account: process.env.CDK_DEFAULT_ACCOUNT,
-		region: process.env.CDK_DEFAULT_REGION
-	},
-	alchemyApiKey: process.env.ALCHEMY_API_KEY!,
-	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!
-});
-
-new AddressActivityQueueStack(app, "AddressActivityQueueStack", {
-	env: {
-		account: process.env.CDK_DEFAULT_ACCOUNT,
-		region: process.env.CDK_DEFAULT_REGION
-	},
-	alchemyApiKey: process.env.ALCHEMY_API_KEY!,
-	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!
-});
 
 new DiscordIntegratorStack(app, "DiscordIntegratorStack", {
 	env: {
