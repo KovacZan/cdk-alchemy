@@ -6,12 +6,21 @@ import { isValidURL } from "../../utils";
 const VALID_NETWORKS = [
 	Network.ETH_MAINNET,
 	Network.ETH_GOERLI,
-	Network.MATIC_MAINNET,
-	Network.MATIC_MUMBAI,
+	Network.ETH_SEPOLIA,
+	Network.OPT_MAINNET,
+	Network.OPT_GOERLI,
+	Network.OPT_SEPOLIA,
 	Network.ARB_MAINNET,
 	Network.ARB_GOERLI,
-	Network.OPT_MAINNET,
-	Network.OPT_GOERLI
+	Network.ARB_SEPOLIA,
+	Network.MATIC_MAINNET,
+	Network.MATIC_MUMBAI,
+	Network.ASTAR_MAINNET,
+	Network.POLYGONZKEVM_MAINNET,
+	Network.POLYGONZKEVM_TESTNET,
+	Network.BASE_MAINNET,
+	Network.BASE_GOERLI,
+	Network.BASE_SEPOLIA
 ];
 
 async function createWebhook(
