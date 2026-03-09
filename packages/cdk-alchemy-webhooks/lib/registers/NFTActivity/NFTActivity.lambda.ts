@@ -1,8 +1,6 @@
 import { Network, WebhookType } from "alchemy-sdk";
-import { getSSMParameterByName } from "../../ssm-utils";
 import { urlValidity } from "../../utils";
 import { checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
-import { storeSecret } from "../../secrets-utils";
 
 const handler = async () => {
 	const apiKey = process.env.ALCHEMY_API_KEY;
@@ -35,7 +33,7 @@ const handler = async () => {
 	if (isAlreadyCreated) {
 		console.log("Webhook for this destination already created!");
 	} else {
-		const response = await alchemyInstance.notify.createWebhook(destinationUrl, WebhookType.NFT_ACTIVITY, {
+		await alchemyInstance.notify.createWebhook(destinationUrl, WebhookType.NFT_ACTIVITY, {
 			filters: [
 				{
 					contractAddress,
@@ -43,13 +41,7 @@ const handler = async () => {
 				}
 			]
 		});
-
-		const path = await getSSMParameterByName(process.env.SSM_PATH_TO_SECRET!);
-
-		await storeSecret(path, {
-			WebhookId: response.id,
-			WebhookSigningKey: response.signingKey
-		});
+		console.log("Webhook created successfully");
 	}
 };
 

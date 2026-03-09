@@ -1,8 +1,6 @@
 import { Network, WebhookType } from "alchemy-sdk";
 import { checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
 import { urlValidity } from "../../utils";
-import { getSSMParameterByName } from "../../ssm-utils";
-import { storeSecret } from "../../secrets-utils";
 
 const handler = async () => {
 	const apiKey = process.env.ALCHEMY_API_KEY;
@@ -36,16 +34,10 @@ const handler = async () => {
 	if (isAlreadyCreated) {
 		console.log("Webhook for this destination and type already created");
 	} else {
-		const response = await alchemyInstance.notify.createWebhook(destinationUrl, WebhookType.ADDRESS_ACTIVITY, {
+		await alchemyInstance.notify.createWebhook(destinationUrl, WebhookType.ADDRESS_ACTIVITY, {
 			addresses: [contractAddress]
 		});
-
-		const path = await getSSMParameterByName(process.env.SSM_PATH_TO_SECRET!);
-
-		await storeSecret(path, {
-			WebhookId: response.id,
-			WebhookSigningKey: response.signingKey
-		});
+		console.log("Webhook created successfully");
 	}
 };
 
