@@ -24,7 +24,7 @@ export class AddressActivityWebhook extends Construct {
 			entry: path.resolve(__dirname, "AddressActivity.lambda.js"),
 			description: "Custom Resource handler for Address Activity Alchemy Webhook",
 			timeout: Duration.minutes(15),
-			runtime: Runtime.NODEJS_18_X,
+			runtime: Runtime.NODEJS_22_X,
 			environment: {
 				ALCHEMY_API_KEY: props.alchemyApiKey,
 				ALCHEMY_AUTH_TOKEN: props.alchemyAuthToken

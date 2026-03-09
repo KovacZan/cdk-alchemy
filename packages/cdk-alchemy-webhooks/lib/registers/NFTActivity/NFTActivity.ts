@@ -25,7 +25,7 @@ export class NFTActivityWebhook extends Construct {
 			entry: path.resolve(__dirname, "NFTActivity.lambda.js"),
 			description: "Custom Resource handler for NFT Activity Alchemy Webhook",
 			timeout: Duration.minutes(15),
-			runtime: Runtime.NODEJS_18_X,
+			runtime: Runtime.NODEJS_22_X,
 			environment: {
 				ALCHEMY_API_KEY: props.alchemyApiKey,
 				ALCHEMY_AUTH_TOKEN: props.alchemyAuthToken
