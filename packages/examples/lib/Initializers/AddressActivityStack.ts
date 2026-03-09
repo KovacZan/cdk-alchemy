@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { AddressActivityInitializer } from "@kovi-soft/cdk-alchemy-webhooks";
+import { AddressActivityWebhook } from "@kovi-soft/cdk-alchemy-webhooks";
 
 interface AddressActivityStackProps extends cdk.StackProps {
 	alchemyApiKey: string;
@@ -11,7 +11,7 @@ export class AddressActivityStack extends cdk.Stack {
 	constructor(scope: Construct, id: string, props: AddressActivityStackProps) {
 		super(scope, id, props);
 
-		new AddressActivityInitializer(this, "AddressActivityExample", {
+		new AddressActivityWebhook(this, "AddressActivityExample", {
 			alchemyApiKey: props.alchemyApiKey,
 			alchemyNetwork: "eth-mainnet",
 			alchemyAuthToken: props.alchemyAuthToken,

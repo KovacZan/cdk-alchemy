@@ -1,9 +1,10 @@
 import { Construct } from "constructs";
 import * as path from "path";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
-import { Duration } from "aws-cdk-lib";
+import { CustomResource, Duration } from "aws-cdk-lib";
 import { Network } from "alchemy-sdk";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
+import { Provider } from "aws-cdk-lib/custom-resources";
 
 export interface AddressActivityProps {
 	alchemyApiKey: string;
@@ -13,32 +14,36 @@ export interface AddressActivityProps {
 	alchemyContractAddress?: string;
 }
 
-export class AddressActivityConstruct extends Construct {
-	public readonly description = "Construct for Address Activity Alchemy Notify/Webhook Functionality";
-	public readonly functionDuration = Duration.minutes(15);
+export class AddressActivityWebhook extends Construct {
+	public readonly webhookId: string;
 
-	public readonly func: NodejsFunction;
-
-	constructor(
-		scope: Construct,
-		id: string,
-		private readonly props: AddressActivityProps
-	) {
+	constructor(scope: Construct, id: string, props: AddressActivityProps) {
 		super(scope, id);
 
-		this.func = new NodejsFunction(this, "AddressActivityLambda", {
+		const handler = new NodejsFunction(this, "AddressActivityHandler", {
 			entry: path.resolve(__dirname, "AddressActivity.lambda.js"),
-			description: this.description,
-			timeout: this.functionDuration,
+			description: "Custom Resource handler for Address Activity Alchemy Webhook",
+			timeout: Duration.minutes(15),
 			runtime: Runtime.NODEJS_18_X,
 			environment: {
-				ALCHEMY_API_KEY: this.props.alchemyApiKey,
-				ALCHEMY_NETWORK: this.props.alchemyNetwork,
-				ALCHEMY_AUTH_TOKEN: this.props.alchemyAuthToken,
-				ALCHEMY_WEBHOOK_DESTINATION_URL: this.props.alchemyWebhookDestinationUrl,
-				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-				ALCHEMY_CONTRACT_ADDRESS: this.props.alchemyContractAddress!
+				ALCHEMY_API_KEY: props.alchemyApiKey,
+				ALCHEMY_AUTH_TOKEN: props.alchemyAuthToken
 			}
 		});
+
+		const provider = new Provider(this, "AddressActivityProvider", {
+			onEventHandler: handler
+		});
+
+		const resource = new CustomResource(this, "AddressActivityResource", {
+			serviceToken: provider.serviceToken,
+			properties: {
+				network: props.alchemyNetwork,
+				destinationUrl: props.alchemyWebhookDestinationUrl,
+				contractAddress: props.alchemyContractAddress || ""
+			}
+		});
+
+		this.webhookId = resource.getAttString("WebhookId");
 	}
 }

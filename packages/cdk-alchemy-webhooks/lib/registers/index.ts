@@ -1,9 +1,2 @@
-import { NFTActivityRegister, NFTActivityInitializer } from "./NFTActivity";
-import { AddressActivityRegister, AddressActivityInitializer } from "./AddressActivity";
-
-export {
-	NFTActivityRegister,
-	NFTActivityInitializer,
-	AddressActivityRegister,
-	AddressActivityInitializer
-};
+export { AddressActivityWebhook, AddressActivityProps } from "./AddressActivity";
+export { NFTActivityWebhook, NFTActivityProps } from "./NFTActivity";

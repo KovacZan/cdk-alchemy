@@ -1,4 +1,1 @@
-import * as NFTActivityRegister from ".";
-import { NFTActivityInitializer } from "./Initializer";
-
-export { NFTActivityRegister, NFTActivityInitializer };
+export { NFTActivityWebhook, NFTActivityProps } from "./NFTActivity";

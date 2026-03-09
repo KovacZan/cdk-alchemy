@@ -1,47 +1,82 @@
+import { CdkCustomResourceEvent, CdkCustomResourceResponse } from "aws-lambda";
 import { Network, WebhookType } from "alchemy-sdk";
-import { urlValidity } from "../../utils";
 import { checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
+import { isValidURL } from "../../utils";
 
-const handler = async () => {
-	const apiKey = process.env.ALCHEMY_API_KEY;
-	const network = process.env.ALCHEMY_NETWORK as Network;
-	const authToken = process.env.ALCHEMY_AUTH_TOKEN;
+const VALID_NETWORKS = [
+	Network.ETH_MAINNET,
+	Network.ETH_GOERLI,
+	Network.MATIC_MAINNET,
+	Network.MATIC_MUMBAI,
+	Network.ARB_MAINNET,
+	Network.ARB_GOERLI,
+	Network.OPT_MAINNET,
+	Network.OPT_GOERLI
+];
 
-	const destinationUrl = process.env.ALCHEMY_WEBHOOK_DESTINATION_URL!;
-	const contractAddress = process.env.ALCHEMY_CONTRACT_ADDRESS || ""; // TODO: create fake init
-	const tokenId = process.env.ALCHEMY_TOKEN_ID || ""; // TODO: create fake init
+async function createWebhook(
+	apiKey: string,
+	authToken: string,
+	network: Network,
+	destinationUrl: string,
+	contractAddress: string,
+	tokenId: string
+): Promise<CdkCustomResourceResponse> {
+	checkNetworkValidity(network, VALID_NETWORKS);
+	if (!isValidURL(destinationUrl)) {
+		throw new Error("destinationUrl is not a valid URL");
+	}
 
-	checkNetworkValidity(network, [
-		Network.ETH_MAINNET,
-		Network.ETH_GOERLI,
-		Network.MATIC_MAINNET,
-		Network.MATIC_MUMBAI,
-		Network.ARB_MAINNET,
-		Network.ARB_GOERLI,
-		Network.OPT_MAINNET,
-		Network.OPT_GOERLI
-	]);
-	urlValidity(destinationUrl);
-	const alchemyInstance = initAlchemy(network, apiKey, authToken);
+	const alchemy = initAlchemy(network, apiKey, authToken);
+	const webhook = await alchemy.notify.createWebhook(destinationUrl, WebhookType.NFT_ACTIVITY, {
+		filters: [
+			{
+				contractAddress,
+				tokenId
+			}
+		]
+	});
 
-	const webhooks = await alchemyInstance.notify.getAllWebhooks();
-	const isAlreadyCreated = webhooks.webhooks.some(
-		webhook =>
-			webhook.url === destinationUrl && webhook.network === network && webhook.type === WebhookType.NFT_ACTIVITY
-	);
+	console.log(`Webhook created: ${webhook.id}`);
+	return {
+		PhysicalResourceId: webhook.id,
+		Data: { WebhookId: webhook.id }
+	};
+}
 
-	if (isAlreadyCreated) {
-		console.log("Webhook for this destination already created!");
-	} else {
-		await alchemyInstance.notify.createWebhook(destinationUrl, WebhookType.NFT_ACTIVITY, {
-			filters: [
-				{
-					contractAddress,
-					tokenId
-				}
-			]
-		});
-		console.log("Webhook created successfully");
+async function deleteWebhook(apiKey: string, authToken: string, network: Network, webhookId: string): Promise<void> {
+	try {
+		const alchemy = initAlchemy(network, apiKey, authToken);
+		await alchemy.notify.deleteWebhook(webhookId);
+		console.log(`Webhook deleted: ${webhookId}`);
+	} catch (err) {
+		console.log(`Failed to delete webhook ${webhookId}, it may already be gone: ${err}`);
+	}
+}
+
+const handler = async (event: CdkCustomResourceEvent): Promise<CdkCustomResourceResponse> => {
+	const apiKey = process.env.ALCHEMY_API_KEY!;
+	const authToken = process.env.ALCHEMY_AUTH_TOKEN!;
+
+	const network = event.ResourceProperties.network as Network;
+	const destinationUrl = event.ResourceProperties.destinationUrl as string;
+	const contractAddress = (event.ResourceProperties.contractAddress as string) || "";
+	const tokenId = (event.ResourceProperties.tokenId as string) || "";
+
+	switch (event.RequestType) {
+		case "Create":
+			return createWebhook(apiKey, authToken, network, destinationUrl, contractAddress, tokenId);
+
+		case "Update":
+			await deleteWebhook(apiKey, authToken, network, event.PhysicalResourceId);
+			return createWebhook(apiKey, authToken, network, destinationUrl, contractAddress, tokenId);
+
+		case "Delete":
+			await deleteWebhook(apiKey, authToken, network, event.PhysicalResourceId);
+			return { PhysicalResourceId: event.PhysicalResourceId };
+
+		default:
+			throw new Error(`Unknown request type: ${(event as CdkCustomResourceEvent).RequestType}`);
 	}
 };
 

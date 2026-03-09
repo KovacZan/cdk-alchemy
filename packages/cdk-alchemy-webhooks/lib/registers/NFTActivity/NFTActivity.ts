@@ -1,9 +1,10 @@
 import { Construct } from "constructs";
 import * as path from "path";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
-import { Duration } from "aws-cdk-lib";
+import { CustomResource, Duration } from "aws-cdk-lib";
 import { BigNumber, Network } from "alchemy-sdk";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
+import { Provider } from "aws-cdk-lib/custom-resources";
 
 export interface NFTActivityProps {
 	alchemyApiKey: string;
@@ -14,32 +15,37 @@ export interface NFTActivityProps {
 	alchemyTokenId?: string | number | BigNumber;
 }
 
-export class NFTActivityConstruct extends Construct {
-	public readonly description = "Construct for NFT Activity Alchemy Notify/Webhook Functionality";
-	public readonly functionDuration = Duration.minutes(15);
+export class NFTActivityWebhook extends Construct {
+	public readonly webhookId: string;
 
-	public readonly func: NodejsFunction;
-
-	constructor(
-		scope: Construct,
-		id: string,
-		private readonly props: NFTActivityProps
-	) {
+	constructor(scope: Construct, id: string, props: NFTActivityProps) {
 		super(scope, id);
 
-		this.func = new NodejsFunction(this, "NFTActivityLambda", {
+		const handler = new NodejsFunction(this, "NFTActivityHandler", {
 			entry: path.resolve(__dirname, "NFTActivity.lambda.js"),
-			description: this.description,
-			timeout: this.functionDuration,
+			description: "Custom Resource handler for NFT Activity Alchemy Webhook",
+			timeout: Duration.minutes(15),
 			runtime: Runtime.NODEJS_18_X,
 			environment: {
-				ALCHEMY_API_KEY: this.props.alchemyApiKey,
-				ALCHEMY_NETWORK: this.props.alchemyNetwork,
-				ALCHEMY_AUTH_TOKEN: this.props.alchemyAuthToken,
-				ALCHEMY_WEBHOOK_DESTINATION_URL: this.props.alchemyWebhookDestinationUrl,
-				ALCHEMY_CONTRACT_ADDRESS: this.props.alchemyContractAddress!, // TODO: adjust
-				ALCHEMY_TOKEN_ID: this.props.alchemyTokenId!.toString() // TODO: adjust
+				ALCHEMY_API_KEY: props.alchemyApiKey,
+				ALCHEMY_AUTH_TOKEN: props.alchemyAuthToken
 			}
 		});
+
+		const provider = new Provider(this, "NFTActivityProvider", {
+			onEventHandler: handler
+		});
+
+		const resource = new CustomResource(this, "NFTActivityResource", {
+			serviceToken: provider.serviceToken,
+			properties: {
+				network: props.alchemyNetwork,
+				destinationUrl: props.alchemyWebhookDestinationUrl,
+				contractAddress: props.alchemyContractAddress || "",
+				tokenId: props.alchemyTokenId?.toString() || ""
+			}
+		});
+
+		this.webhookId = resource.getAttString("WebhookId");
 	}
 }
