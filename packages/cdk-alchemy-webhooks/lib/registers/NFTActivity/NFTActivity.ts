@@ -13,6 +13,7 @@ export interface NFTActivityProps {
 	alchemyWebhookDestinationUrl: string;
 	alchemyContractAddress?: string;
 	alchemyTokenId?: string | number | BigNumber;
+	alchemyWebhookName?: string;
 }
 
 export class NFTActivityWebhook extends Construct {
@@ -42,7 +43,8 @@ export class NFTActivityWebhook extends Construct {
 				network: props.alchemyNetwork,
 				destinationUrl: props.alchemyWebhookDestinationUrl,
 				contractAddress: props.alchemyContractAddress || "",
-				tokenId: props.alchemyTokenId?.toString() || ""
+				tokenId: props.alchemyTokenId?.toString() || "",
+				webhookName: props.alchemyWebhookName || ""
 			}
 		});
 
