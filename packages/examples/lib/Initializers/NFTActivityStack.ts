@@ -17,7 +17,8 @@ export class NFTActivityStack extends cdk.Stack {
 			alchemyAuthToken: props.alchemyAuthToken,
 			alchemyWebhookDestinationUrl: "https://www.google.com",
 			alchemyContractAddress: "0x026224A2940bFE258D0dbE947919B62fE321F042",
-			alchemyTokenId: "123"
+			alchemyTokenId: "123",
+			alchemyWebhookName: "MyNFTActivityWebhook"
 		});
 	}
 }

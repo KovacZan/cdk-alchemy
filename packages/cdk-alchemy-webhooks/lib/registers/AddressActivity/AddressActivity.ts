@@ -12,6 +12,7 @@ export interface AddressActivityProps {
 	alchemyAuthToken: string;
 	alchemyWebhookDestinationUrl: string;
 	alchemyContractAddress?: string;
+	alchemyWebhookName?: string;
 }
 
 export class AddressActivityWebhook extends Construct {
@@ -40,7 +41,8 @@ export class AddressActivityWebhook extends Construct {
 			properties: {
 				network: props.alchemyNetwork,
 				destinationUrl: props.alchemyWebhookDestinationUrl,
-				contractAddress: props.alchemyContractAddress || ""
+				contractAddress: props.alchemyContractAddress || "",
+				webhookName: props.alchemyWebhookName || ""
 			}
 		});
 

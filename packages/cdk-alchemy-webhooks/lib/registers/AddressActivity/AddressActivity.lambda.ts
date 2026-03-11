@@ -1,7 +1,14 @@
 import { CdkCustomResourceEvent, CdkCustomResourceResponse } from "aws-lambda";
-import { Network, WebhookType } from "alchemy-sdk";
+import { Network } from "alchemy-sdk";
 import { checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
 import { isValidURL } from "../../utils";
+
+/**
+ * Converts SDK network format (e.g. "eth-mainnet") to the webhook API format (e.g. "ETH_MAINNET").
+ */
+function toWebhookNetwork(network: Network): string {
+	return network.replace(/-/g, "_").toUpperCase();
+}
 
 const VALID_NETWORKS = [
 	Network.ETH_MAINNET,
@@ -28,22 +35,47 @@ async function createWebhook(
 	authToken: string,
 	network: Network,
 	destinationUrl: string,
-	contractAddress: string
+	contractAddress: string,
+	webhookName: string
 ): Promise<CdkCustomResourceResponse> {
 	checkNetworkValidity(network, VALID_NETWORKS);
 	if (!isValidURL(destinationUrl)) {
 		throw new Error("destinationUrl is not a valid URL");
 	}
 
-	const alchemy = initAlchemy(network, apiKey, authToken);
-	const webhook = await alchemy.notify.createWebhook(destinationUrl, WebhookType.ADDRESS_ACTIVITY, {
-		addresses: contractAddress ? [contractAddress] : []
+	const body: Record<string, unknown> = {
+		network: toWebhookNetwork(network),
+		webhook_type: "ADDRESS_ACTIVITY",
+		webhook_url: destinationUrl
+	};
+	if (webhookName) {
+		body.name = webhookName;
+	}
+	if (contractAddress) {
+		body.addresses = [contractAddress];
+	}
+
+	const response = await fetch("https://dashboard.alchemy.com/api/create-webhook", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"X-Alchemy-Token": authToken
+		},
+		body: JSON.stringify(body)
 	});
 
-	console.log(`Webhook created: ${webhook.id}`);
+	if (!response.ok) {
+		const errorText = await response.text();
+		throw new Error(`Failed to create webhook: ${response.status} ${errorText}`);
+	}
+
+	const result = (await response.json()) as { data: { id: string } };
+	const webhookId = result.data.id;
+
+	console.log(`Webhook created: ${webhookId}`);
 	return {
-		PhysicalResourceId: webhook.id,
-		Data: { WebhookId: webhook.id }
+		PhysicalResourceId: webhookId,
+		Data: { WebhookId: webhookId }
 	};
 }
 
@@ -64,14 +96,15 @@ const handler = async (event: CdkCustomResourceEvent): Promise<CdkCustomResource
 	const network = event.ResourceProperties.network as Network;
 	const destinationUrl = event.ResourceProperties.destinationUrl as string;
 	const contractAddress = (event.ResourceProperties.contractAddress as string) || "";
+	const webhookName = (event.ResourceProperties.webhookName as string) || "";
 
 	switch (event.RequestType) {
 		case "Create":
-			return createWebhook(apiKey, authToken, network, destinationUrl, contractAddress);
+			return createWebhook(apiKey, authToken, network, destinationUrl, contractAddress, webhookName);
 
 		case "Update":
 			await deleteWebhook(apiKey, authToken, network, event.PhysicalResourceId);
-			return createWebhook(apiKey, authToken, network, destinationUrl, contractAddress);
+			return createWebhook(apiKey, authToken, network, destinationUrl, contractAddress, webhookName);
 
 		case "Delete":
 			await deleteWebhook(apiKey, authToken, network, event.PhysicalResourceId);
