@@ -5,11 +5,17 @@ import { CustomResource, Duration } from "aws-cdk-lib";
 import { BigNumber, Network } from "alchemy-sdk";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { Provider } from "aws-cdk-lib/custom-resources";
+import {
+	IAlchemyCredential,
+	resolveCredentialConfig,
+	configureCredentialEnv,
+	grantCredentialRead
+} from "../../credential";
 
 export interface NFTActivityProps {
-	alchemyApiKey: string;
+	alchemyApiKey: string | IAlchemyCredential;
 	alchemyNetwork: Network | string;
-	alchemyAuthToken: string;
+	alchemyAuthToken: string | IAlchemyCredential;
 	alchemyWebhookDestinationUrl: string;
 	alchemyContractAddress?: string;
 	alchemyTokenId?: string | number | BigNumber;
@@ -22,16 +28,25 @@ export class NFTActivityWebhook extends Construct {
 	constructor(scope: Construct, id: string, props: NFTActivityProps) {
 		super(scope, id);
 
+		const apiKeyCred = resolveCredentialConfig(props.alchemyApiKey);
+		const authTokenCred = resolveCredentialConfig(props.alchemyAuthToken);
+
 		const handler = new NodejsFunction(this, "NFTActivityHandler", {
 			entry: path.resolve(__dirname, "NFTActivity.lambda.js"),
 			description: "Custom Resource handler for NFT Activity Alchemy Webhook",
 			timeout: Duration.minutes(15),
 			runtime: Runtime.NODEJS_22_X,
 			environment: {
-				ALCHEMY_API_KEY: props.alchemyApiKey,
-				ALCHEMY_AUTH_TOKEN: props.alchemyAuthToken
+				...configureCredentialEnv("ALCHEMY_API_KEY", apiKeyCred),
+				...configureCredentialEnv("ALCHEMY_AUTH_TOKEN", authTokenCred)
+			},
+			bundling: {
+				externalModules: ["@aws-sdk/*"]
 			}
 		});
+
+		grantCredentialRead(handler, apiKeyCred);
+		grantCredentialRead(handler, authTokenCred);
 
 		const provider = new Provider(this, "NFTActivityProvider", {
 			onEventHandler: handler

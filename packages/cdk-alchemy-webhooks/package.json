@@ -16,6 +16,8 @@
 		"format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
 	},
 	"devDependencies": {
+		"@aws-sdk/client-secrets-manager": "^3",
+		"@aws-sdk/client-ssm": "^3",
 		"@types/aws-lambda": "^8.10.148",
 		"@types/jest": "^29.5.14",
 		"@types/node": "^18.19.70",

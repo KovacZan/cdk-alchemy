@@ -5,11 +5,17 @@ import { CustomResource, Duration } from "aws-cdk-lib";
 import { Network } from "alchemy-sdk";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { Provider } from "aws-cdk-lib/custom-resources";
+import {
+	IAlchemyCredential,
+	resolveCredentialConfig,
+	configureCredentialEnv,
+	grantCredentialRead
+} from "../../credential";
 
 export interface CustomWebhookProps {
-	alchemyApiKey: string;
+	alchemyApiKey: string | IAlchemyCredential;
 	alchemyNetwork: Network | string;
-	alchemyAuthToken: string;
+	alchemyAuthToken: string | IAlchemyCredential;
 	alchemyWebhookDestinationUrl: string;
 	alchemyGraphqlQuery: string;
 	alchemyWebhookName?: string;
@@ -21,16 +27,25 @@ export class CustomWebhook extends Construct {
 	constructor(scope: Construct, id: string, props: CustomWebhookProps) {
 		super(scope, id);
 
+		const apiKeyCred = resolveCredentialConfig(props.alchemyApiKey);
+		const authTokenCred = resolveCredentialConfig(props.alchemyAuthToken);
+
 		const handler = new NodejsFunction(this, "CustomWebhookHandler", {
 			entry: path.resolve(__dirname, "CustomWebhook.lambda.js"),
 			description: "Custom Resource handler for Custom GraphQL Alchemy Webhook",
 			timeout: Duration.minutes(15),
 			runtime: Runtime.NODEJS_22_X,
 			environment: {
-				ALCHEMY_API_KEY: props.alchemyApiKey,
-				ALCHEMY_AUTH_TOKEN: props.alchemyAuthToken
+				...configureCredentialEnv("ALCHEMY_API_KEY", apiKeyCred),
+				...configureCredentialEnv("ALCHEMY_AUTH_TOKEN", authTokenCred)
+			},
+			bundling: {
+				externalModules: ["@aws-sdk/*"]
 			}
 		});
+
+		grantCredentialRead(handler, apiKeyCred);
+		grantCredentialRead(handler, authTokenCred);
 
 		const provider = new Provider(this, "CustomWebhookProvider", {
 			onEventHandler: handler

@@ -2,6 +2,7 @@ import { CdkCustomResourceEvent, CdkCustomResourceResponse } from "aws-lambda";
 import { Network } from "alchemy-sdk";
 import { checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
 import { isValidURL } from "../../utils";
+import { resolveCredential } from "../../credential-resolver";
 
 /**
  * Converts SDK network format (e.g. "eth-mainnet") to the webhook API format (e.g. "ETH_MAINNET").
@@ -91,8 +92,8 @@ async function deleteWebhook(apiKey: string, authToken: string, network: Network
 }
 
 const handler = async (event: CdkCustomResourceEvent): Promise<CdkCustomResourceResponse> => {
-	const apiKey = process.env.ALCHEMY_API_KEY!;
-	const authToken = process.env.ALCHEMY_AUTH_TOKEN!;
+	const apiKey = await resolveCredential("ALCHEMY_API_KEY");
+	const authToken = await resolveCredential("ALCHEMY_AUTH_TOKEN");
 
 	const network = event.ResourceProperties.network as Network;
 	const destinationUrl = event.ResourceProperties.destinationUrl as string;
