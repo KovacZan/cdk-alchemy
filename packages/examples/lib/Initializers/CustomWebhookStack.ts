@@ -1,6 +1,6 @@
 import * as cdk from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { CustomWebhook } from "@kovi-soft/cdk-alchemy-webhooks";
+import { CustomWebhook, AlchemyCredential } from "@kovi-soft/cdk-alchemy-webhooks";
 
 interface CustomWebhookStackProps extends cdk.StackProps {
 	alchemyApiKey: string;
@@ -12,9 +12,9 @@ export class CustomWebhookStack extends cdk.Stack {
 		super(scope, id, props);
 
 		new CustomWebhook(this, "CustomWebhookExample", {
-			alchemyApiKey: props.alchemyApiKey,
+			alchemyApiKey: AlchemyCredential.fromPlainText(props.alchemyApiKey),
 			alchemyNetwork: "eth-mainnet",
-			alchemyAuthToken: props.alchemyAuthToken,
+			alchemyAuthToken: AlchemyCredential.fromPlainText(props.alchemyAuthToken),
 			alchemyWebhookDestinationUrl: "https://www.google.com",
 			alchemyWebhookName: "MyCustomWebhook",
 			alchemyGraphqlQuery: `{
