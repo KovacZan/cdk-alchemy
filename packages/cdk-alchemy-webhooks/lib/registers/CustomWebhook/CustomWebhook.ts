@@ -11,13 +11,19 @@ import {
 	configureCredentialEnv,
 	grantCredentialRead
 } from "../../credential";
+import {
+	IGraphqlQuerySource,
+	resolveGraphqlQueryConfig,
+	configureGraphqlQueryEnv,
+	grantGraphqlQueryRead
+} from "../../graphql-query-source";
 
 export interface CustomWebhookProps {
 	alchemyApiKey: string | IAlchemyCredential;
 	alchemyNetwork: Network | string;
 	alchemyAuthToken: string | IAlchemyCredential;
 	alchemyWebhookDestinationUrl: string;
-	alchemyGraphqlQuery: string;
+	alchemyGraphqlQuery: string | IGraphqlQuerySource;
 	alchemyWebhookName?: string;
 }
 
@@ -29,6 +35,7 @@ export class CustomWebhook extends Construct {
 
 		const apiKeyCred = resolveCredentialConfig(props.alchemyApiKey);
 		const authTokenCred = resolveCredentialConfig(props.alchemyAuthToken);
+		const graphqlQuerySource = resolveGraphqlQueryConfig(props.alchemyGraphqlQuery);
 
 		const handler = new NodejsFunction(this, "CustomWebhookHandler", {
 			entry: path.resolve(__dirname, "CustomWebhook.lambda.js"),
@@ -37,7 +44,8 @@ export class CustomWebhook extends Construct {
 			runtime: Runtime.NODEJS_22_X,
 			environment: {
 				...configureCredentialEnv("ALCHEMY_API_KEY", apiKeyCred),
-				...configureCredentialEnv("ALCHEMY_AUTH_TOKEN", authTokenCred)
+				...configureCredentialEnv("ALCHEMY_AUTH_TOKEN", authTokenCred),
+				...configureGraphqlQueryEnv(graphqlQuerySource)
 			},
 			bundling: {
 				externalModules: ["@aws-sdk/*"]
@@ -46,6 +54,7 @@ export class CustomWebhook extends Construct {
 
 		grantCredentialRead(handler, apiKeyCred);
 		grantCredentialRead(handler, authTokenCred);
+		grantGraphqlQueryRead(handler, graphqlQuerySource);
 
 		const provider = new Provider(this, "CustomWebhookProvider", {
 			onEventHandler: handler
@@ -56,7 +65,7 @@ export class CustomWebhook extends Construct {
 			properties: {
 				network: props.alchemyNetwork,
 				destinationUrl: props.alchemyWebhookDestinationUrl,
-				graphqlQuery: props.alchemyGraphqlQuery,
+				graphqlQueryConfig: `${graphqlQuerySource.sourceType}:${graphqlQuerySource.value}`,
 				webhookName: props.alchemyWebhookName || ""
 			}
 		});

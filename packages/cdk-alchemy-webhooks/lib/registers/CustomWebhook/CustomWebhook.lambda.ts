@@ -3,6 +3,7 @@ import { Network } from "alchemy-sdk";
 import { checkNetworkValidity, initAlchemy } from "../../alchemy-utils";
 import { isValidURL } from "../../utils";
 import { resolveCredential } from "../../credential-resolver";
+import { resolveGraphqlQuery } from "../../graphql-query-resolver";
 
 /**
  * Converts SDK network format (e.g. "eth-mainnet") to the webhook API format (e.g. "ETH_MAINNET").
@@ -95,9 +96,10 @@ const handler = async (event: CdkCustomResourceEvent): Promise<CdkCustomResource
 	const apiKey = await resolveCredential("ALCHEMY_API_KEY");
 	const authToken = await resolveCredential("ALCHEMY_AUTH_TOKEN");
 
+	const graphqlQuery = await resolveGraphqlQuery();
+
 	const network = event.ResourceProperties.network as Network;
 	const destinationUrl = event.ResourceProperties.destinationUrl as string;
-	const graphqlQuery = (event.ResourceProperties.graphqlQuery as string) || "";
 	const webhookName = (event.ResourceProperties.webhookName as string) || "";
 
 	switch (event.RequestType) {
