@@ -1,24 +1,221 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
+/* Hero */
 .heroBanner {
-  padding: 4rem 0;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+	padding: 5rem 0 4rem;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	background: linear-gradient(135deg, var(--alchy-gradient-start), var(--alchy-gradient-end));
+	color: #fff;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.heroTitle {
+	font-size: 3.5rem;
+	font-weight: 800;
+	margin-bottom: 0.5rem;
+	animation: fadeInUp 0.6s ease-out;
+}
+
+.heroSubtitle {
+	font-size: 1.25rem;
+	opacity: 0.9;
+	margin-bottom: 2rem;
+	animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.badge {
+	display: inline-block;
+	background: rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(4px);
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 999px;
+	padding: 0.35rem 1rem;
+	font-size: 0.85rem;
+	font-weight: 600;
+	margin-bottom: 1.5rem;
+	animation: fadeInUp 0.6s ease-out 0.05s both;
 }
 
 .buttons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1rem;
+	animation: fadeInUp 0.6s ease-out 0.2s both;
 }
 
+.btnPrimary {
+	background: #fff;
+	color: var(--alchy-gradient-start);
+	border: none;
+	font-weight: 600;
+	padding: 0.75rem 2rem;
+	border-radius: 8px;
+	font-size: 1rem;
+	cursor: pointer;
+	text-decoration: none;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btnPrimary:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	color: var(--alchy-gradient-start);
+	text-decoration: none;
+}
+
+.btnOutline {
+	background: transparent;
+	color: #fff;
+	border: 2px solid rgba(255, 255, 255, 0.6);
+	font-weight: 600;
+	padding: 0.65rem 2rem;
+	border-radius: 8px;
+	font-size: 1rem;
+	cursor: pointer;
+	text-decoration: none;
+	transition: background 0.2s, border-color 0.2s;
+}
+
+.btnOutline:hover {
+	background: rgba(255, 255, 255, 0.15);
+	border-color: #fff;
+	color: #fff;
+	text-decoration: none;
+}
+
+/* Code Showcase */
+.codeSection {
+	padding: 4rem 0;
+	background: var(--ifm-background-surface-color);
+}
+
+.codeColumns {
+	display: flex;
+	align-items: center;
+	gap: 3rem;
+}
+
+.codeText {
+	flex: 1;
+}
+
+.codeText h2 {
+	font-size: 2rem;
+	margin-bottom: 1rem;
+}
+
+.codeText p {
+	color: var(--alchy-text-muted);
+	font-size: 1.1rem;
+	line-height: 1.7;
+}
+
+.codeBlock {
+	flex: 1;
+	min-width: 0;
+}
+
+/* Social Proof */
+.socialProof {
+	padding: 4rem 0;
+	text-align: center;
+}
+
+.socialProof h2 {
+	font-size: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.socialSubtitle {
+	color: var(--alchy-text-muted);
+	font-size: 1.1rem;
+	margin-bottom: 2rem;
+}
+
+.tweetCard {
+	max-width: 560px;
+	margin: 0 auto;
+	background: var(--ifm-background-surface-color);
+	border: 1px solid var(--ifm-color-emphasis-200);
+	border-left: 4px solid var(--ifm-color-primary);
+	border-radius: 16px;
+	padding: 2rem;
+	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+	text-align: left;
+}
+
+.tweetHeader {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+}
+
+.tweetAuthor {
+	font-weight: 600;
+}
+
+.tweetHandle {
+	color: var(--alchy-text-muted);
+	font-size: 0.9rem;
+}
+
+.tweetBody {
+	font-size: 1.05rem;
+	line-height: 1.6;
+	margin-bottom: 1.25rem;
+}
+
+.tweetLink {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-weight: 600;
+	color: var(--ifm-color-primary);
+	text-decoration: none;
+}
+
+.tweetLink:hover {
+	text-decoration: underline;
+	color: var(--ifm-color-primary-dark);
+}
+
+/* Bottom CTA */
+.bottomCta {
+	padding: 4rem 0;
+	text-align: center;
+	background: linear-gradient(135deg, var(--alchy-gradient-start), var(--alchy-gradient-end));
+	color: #fff;
+}
+
+.bottomCta h2 {
+	font-size: 2rem;
+	margin-bottom: 0.5rem;
+}
+
+.bottomCta p {
+	opacity: 0.9;
+	font-size: 1.1rem;
+	margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media screen and (max-width: 996px) {
+	.heroBanner {
+		padding: 3rem 1.5rem;
+	}
+
+	.heroTitle {
+		font-size: 2.25rem;
+	}
+
+	.codeColumns {
+		flex-direction: column;
+	}
+
+	.codeText,
+	.codeBlock {
+		flex: none;
+		width: 100%;
+	}
+}
