@@ -1,0 +1,7 @@
+{
+	"name": "@kovi-soft/cdk-alchemy-webhooks-skill",
+	"version": "1.0.0",
+	"description": "Claude Code skill for scaffolding @kovi-soft/cdk-alchemy-webhooks CDK constructs",
+	"private": false,
+	"license": "MIT"
+}
