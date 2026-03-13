@@ -21,14 +21,6 @@ function HomepageHeader() {
                         Alchy Webhooks
                     </Link>
                 </div>
-                <br/>
-                <div className={styles.buttons}>
-                    <Link
-                        className="button button--secondary button--lg"
-                        to="/alchy-integrator/intro">
-                        Alchy Integrator
-                    </Link>
-                </div>
             </div>
         </header>
     );
