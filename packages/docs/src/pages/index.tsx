@@ -80,7 +80,7 @@ function SocialProof() {
 						</div>
 					</div>
 					<div className={styles.tweetBody}>
-						Super excited to have won the Alchemy University SDK Challenge!
+						Super excited to have won the Alchemy SDK Challenge!
 						CDK Alchemy brings the power of AWS CDK to Alchemy&apos;s Web3
 						platform — deploy webhooks, monitors, and more with
 						infrastructure-as-code.
