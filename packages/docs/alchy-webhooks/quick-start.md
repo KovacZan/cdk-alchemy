@@ -3,13 +3,7 @@ sidebar_position: 2
 ---
 # Quick Start
 
-:::caution
-
-This package is still under development! Be careful while using it!
-
-:::
-
-## 1. Installation 
+## 1. Installation
 
 Run the following command inside your infrastructure repository.
 
@@ -21,23 +15,23 @@ npm install @kovi-soft/cdk-alchemy-webhooks
 
 ## 2. Setup
 
-Include `AddressActivityInitializer` into your Infrastructure code and start using.
+Include `AddressActivityWebhook` into your Infrastructure code and start using.
 
 ```typescript
-import { AddressActivityInitializer } from "@kovi-soft/cdk-alchemy-webhooks";
+import { AddressActivityWebhook, AlchemyCredential } from "@kovi-soft/cdk-alchemy-webhooks";
 
 export class AddressActivityStack extends cdk.Stack {
-    constructor(scope: Construct, id: string, props?: {}) {
-        super(scope, id, props);
+	constructor(scope: Construct, id: string, props?: {}) {
+		super(scope, id, props);
 
-        new AddressActivityInitializer(this, "AddressActivityExample", {
-            alchemyApiKey: "<your-alchemy-api-key>",
-            alchemyNetwork: "eth-mainnet",
-            alchemyAuthToken: "<your-alchemy-auth-token>",
-            alchemyWebhookDestinationUrl: "https://my-domain.com/destination-to-my-server",
-            alchemyContractAddress: "0x026224A2940bFE258D0dbE947919B62fE321F042"
-        });
-    }
+		new AddressActivityWebhook(this, "AddressActivityExample", {
+			alchemyApiKey: AlchemyCredential.fromPlainText("<your-alchemy-api-key>"),
+			alchemyNetwork: "eth-mainnet",
+			alchemyAuthToken: AlchemyCredential.fromPlainText("<your-alchemy-auth-token>"),
+			alchemyWebhookDestinationUrl: "https://my-domain.com/destination-to-my-server",
+			alchemyContractAddress: "0x026224A2940bFE258D0dbE947919B62fE321F042"
+		});
+	}
 }
 ```
 

@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # Introduction
 
-Introducing CDK Alchy Webhooks, a powerful library that leverages the capabilities 
+Introducing CDK Alchy Webhooks, a powerful library that leverages the capabilities
 of AWS and its CloudFormation service to provide a flexible and scalable infrastructure
-for your applications. 
+for your applications.
 
 With CDK Alchy Webhooks, you can easily integrate the power of Alchemy into your Cloud infrastructure,
 with just a few lines of code.
@@ -14,34 +14,29 @@ with just a few lines of code.
 ## Use Cases
 
 Whether you're building a fintech application, a gaming platform, or a supply chain solution,
-CDK Alchemy Webhooks can help you achieve your goals with speed and reliability. 
+CDK Alchemy Webhooks can help you achieve your goals with speed and reliability.
 And because it's an open source project, you can customize and extend it to meet your specific needs.
-
 
 ## Structure
 
-CDK Alchemy Webhooks is built around two main constructs:
- - Initializers
- - Queues
+CDK Alchemy Webhooks provides constructs for provisioning Alchemy Notify Webhooks as part of your AWS infrastructure.
 
-### Initializers
+### Webhook Constructs
 
-Allow you to set up webhooks while provisioning your resources, 
-so you can automatically set up Alchemy Notify Webhook when you are provisioning for various environments. 
-You can Initialize Webhooks which Alchemy provides:
-- NFT Activity
-- Address Activity
-- Dropped Transactions Notifications
-- Mined Transactions Notifications
+Webhook constructs allow you to set up Alchemy Notify Webhooks while provisioning your resources,
+so they are automatically created when you deploy to various environments.
+The following webhook types are available:
 
-### Queues
+- **Address Activity** — monitor address activity on-chain
+- **NFT Activity** — monitor NFT transfers and activity
+- **Custom Webhook** — use GraphQL queries to define custom webhook payloads
 
-Queues, on the other hand, enable you to adjust your application at runtime, 
-by providing a simple way to execute specific update when needed.
-CDK Alchy Webhooks provides two Queues you can execute:
-- Update NFT Activity
-- Update Address Activity
+### Credential Management
 
+The `AlchemyCredential` abstraction lets you securely provide your Alchemy API key and auth token from multiple sources:
 
+- Plain text (for development)
+- AWS SSM Parameter Store
+- AWS Secrets Manager
 
-
+See the [Credentials](./credential.md) page for details.

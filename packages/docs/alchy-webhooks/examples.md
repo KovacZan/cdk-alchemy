@@ -1,14 +1,14 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
 # Examples
 
-There is dedicated package inside monorepo, which serves for the soul purpose of providing examples.
+There is a dedicated package inside the monorepo which serves the purpose of providing examples.
 
 ## Try it out
 
-### 1. Clone 
+### 1. Clone
 ```bash
 git clone https://github.com/KovacZan/cdk-alchemy
 ```
@@ -27,17 +27,6 @@ cdk deploy <any-of-the-stacks>
 
 ## List of Provided Example Stacks
 
-- NFTActivityStack
 - AddressActivityStack
-- DroppedTransactionsStack
-- MinedTransactionsStack
-- NFTActivityQueueStack
-- AddressActivityQueueStack
-
-
-:::info
-
-Once the packages is **finished** and all the neat picks are set, 
-we will provide detailed documentation on how to set each and every construct up
-
-:::
+- NFTActivityStack
+- CustomWebhookStack
