@@ -11,17 +11,24 @@ AWS Resources in the cloud.
 
 ```
 .
-|-- cdk-alchemy-webhooks //Impplementation of Alchemy Webhooks Module
-|-- docs // Documentation App
-`-- examples // Implementaion of examples with CDK
+|-- cdk-alchemy-webhooks       // Implementation of Alchemy Webhooks Module
+|-- cdk-alchemy-webhooks-skill // Claude Code skill for scaffolding webhook constructs
+|-- docs                       // Documentation App
+`-- examples                   // Implementation of examples with CDK
 ```
 
 ## Usage
 
-### For usage of Alchemy Webhooks
+### Alchemy Webhooks
 ```bash
 npm install @kovi-soft/cdk-alchemy-webhooks
 ```
+
+### Claude Code Skill
+```bash
+npm install @kovi-soft/cdk-alchemy-webhooks-skill
+```
+
 *Check the Documentation for more details*
 
 ## Install and Run - For Further Development
