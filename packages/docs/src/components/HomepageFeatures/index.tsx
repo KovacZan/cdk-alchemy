@@ -37,11 +37,18 @@ const FeatureList: FeatureItem[] = [
 			<>SSM Parameter Store, Secrets Manager, or plain text.</>
 		),
 	},
+	{
+		icon: "\uD83E\uDD16",
+		title: "AI-Powered Scaffolding",
+		description: (
+			<>Generate webhook constructs interactively with Claude Code.</>
+		),
+	},
 ];
 
 function Feature({ icon, title, description }: FeatureItem) {
 	return (
-		<div className={clsx("col col--6", styles.cardCol)}>
+		<div className={clsx("col col--4", styles.cardCol)}>
 			<div className={styles.card}>
 				<div className={styles.cardIcon}>{icon}</div>
 				<h3>{title}</h3>

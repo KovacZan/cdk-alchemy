@@ -49,3 +49,7 @@ For Custom Webhooks, the `GraphqlQuerySource` abstraction lets you provide your 
 - AWS SSM Parameter Store
 
 See the [Custom Webhook](./constructs/custom-webhook.md) page for details.
+
+### Claude Code Integration
+
+A [Claude Code skill](./claude-code-skill.md) is available to interactively scaffold webhook constructs. It guides you through credential setup, network selection, and generates production-ready code — no boilerplate needed.
