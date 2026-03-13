@@ -36,21 +36,25 @@ pnpm typecheck      # tsc type checking
 
 ### Construct Pattern
 
-Each feature follows: `{Feature}Construct` class extending CDK `Construct`, with a corresponding `{Feature}.lambda.ts` handler file.
+Three webhook types: `AddressActivityWebhook`, `NFTActivityWebhook`, `CustomWebhook` (GraphQL-based). Each extends CDK `Construct` with a corresponding `{Type}.lambda.ts` handler file. Constructs are located in `lib/registers/{Type}/` subdirectories.
 
-**Registers** (initializers): Lambda functions that call Alchemy SDK to create webhooks, storing credentials in AWS Secrets Manager.
-
-**Queues** (event handlers): Lambda functions that process incoming webhook events, retrieving credentials from Secrets Manager.
+**Registers** (CustomResource handlers): Lambda functions that call Alchemy SDK to create/update/delete webhooks as part of the CDK lifecycle. Credentials are configurable via `AlchemyCredential` class — supports plain text, SSM Parameter Store, or Secrets Manager.
 
 ### Shared Utilities
 
-- `alchemy-utils.ts` — Alchemy SDK init, network validation, signature verification
-- `ssm-utils.ts` — AWS SSM Parameter Store access
-- `secrets-utils.ts` — AWS Secrets Manager operations
+- `alchemy-utils.ts` — Alchemy SDK init, network validation
+- `credential.ts` — `AlchemyCredential` class, credential config resolution, IAM grant helpers
+- `credential-resolver.ts` — Runtime credential resolution from SSM, Secrets Manager, or plain text
+- `utils.ts` — URL validation
 
 ### Lambda Handler Convention
 
-Entry points use `NodejsFunction` with `entry: path.resolve(__dirname, "*.lambda.js")`. Handlers export `{ handler }` with `APIGatewayProxyHandler` signature. Environment variables configure each Lambda at deploy time.
+Entry points use `NodejsFunction` with `entry: path.resolve(__dirname, "*.lambda.js")`. Handlers export `{ handler }` with `CdkCustomResourceEvent` → `CdkCustomResourceResponse` signature, managing webhook create/update/delete lifecycle. Lambda runtime is NODEJS_22_X with 15-minute timeout. AWS SDK modules (`@aws-sdk/*`) are externalized. Environment variables configure each Lambda at deploy time.
+
+### Publishing
+
+- Published package: `@kovi-soft/cdk-alchemy-webhooks`
+- CI/CD: Manual GitHub Actions workflow for npm publishing
 
 ## Code Style
 
