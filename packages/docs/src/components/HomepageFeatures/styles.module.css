@@ -9,6 +9,10 @@
 	margin-bottom: 2rem;
 }
 
+.cardCol {
+	margin-bottom: 2rem;
+}
+
 .card {
 	background: var(--ifm-background-surface-color);
 	border: 1px solid var(--ifm-color-emphasis-200);
