@@ -7,12 +7,15 @@ import HomepageFeatures from "@site/src/components/HomepageFeatures";
 
 import styles from "./index.module.css";
 
-const codeExample = `import { AddressActivityWebhook } from "cdk-alchemy-webhooks";
+const codeExample = `import { AddressActivityWebhook, AlchemyCredential } from "@kovi-soft/cdk-alchemy-webhooks";
 
-const webhook = new AddressActivityWebhook(this, "MyWebhook", {
-  network: "ETH_MAINNET",
-  addresses: ["0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"],
-  authToken: { ssmPath: "/alchemy/auth-token" },
+new AddressActivityWebhook(this, "AddressActivityExample", {
+\talchemyApiKey: AlchemyCredential.fromPlainText("<your-alchemy-api-key>"),
+\talchemyNetwork: "eth-mainnet",
+\talchemyAuthToken: AlchemyCredential.fromPlainText("<your-alchemy-auth-token>"),
+\talchemyWebhookDestinationUrl: "https://my-domain.com/destination-to-my-server",
+\talchemyContractAddress: "0x026224A2940bFE258D0dbE947919B62fE321F042",
+\talchemyWebhookName: "MyAddressActivityWebhook"
 });`;
 
 function HomepageHeader() {
