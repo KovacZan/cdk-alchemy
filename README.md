@@ -26,7 +26,7 @@ npm install @kovi-soft/cdk-alchemy-webhooks
 
 ### Claude Code Skill
 ```bash
-npm install @kovi-soft/cdk-alchemy-webhooks-skill
+npx skills add https://github.com/KovacZan/cdk-alchemy/tree/master/packages/cdk-alchemy-webhooks-skill
 ```
 
 *Check the Documentation for more details*
