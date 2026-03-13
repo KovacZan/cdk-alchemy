@@ -5,7 +5,7 @@ A [Claude Code](https://claude.ai/code) skill for scaffolding [@kovi-soft/cdk-al
 ## Installation
 
 ```bash
-npx skills add kovi-soft/cdk-alchemy-webhooks-skill
+npx skills add https://github.com/KovacZan/cdk-alchemy/tree/master/packages/cdk-alchemy-webhooks-skill  
 ```
 
 ## Usage
