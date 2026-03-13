@@ -11,7 +11,6 @@ AWS Resources in the cloud.
 
 ```
 .
-|-- cdk-alchemy-integrator // Impplementation of Alchemy Integrator Module
 |-- cdk-alchemy-webhooks //Impplementation of Alchemy Webhooks Module
 |-- docs // Documentation App
 `-- examples // Implementaion of examples with CDK
@@ -22,12 +21,6 @@ AWS Resources in the cloud.
 ### For usage of Alchemy Webhooks
 ```bash
 npm install @kovi-soft/cdk-alchemy-webhooks
-```
-*Check the Documentation for more details*
-
-### For usage of Alchemy Integrator
-```bash
-npm install @kovi-soft/cdk-alchemy-integrator
 ```
 *Check the Documentation for more details*
 

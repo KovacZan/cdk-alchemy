@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-CDK Alchemy is a TypeScript monorepo providing AWS CDK v2 constructs for integrating with the Alchemy Web3 Platform. Two main packages: `cdk-alchemy-webhooks` (webhook registers/queues) and `cdk-alchemy-integrator` (Discord webhook integration).
+CDK Alchemy is a TypeScript monorepo providing AWS CDK v2 constructs for integrating with the Alchemy Web3 Platform.
 
 ## Commands
 
@@ -31,8 +31,7 @@ pnpm typecheck      # tsc type checking
 ### Monorepo Structure
 
 - `packages/cdk-alchemy-webhooks/` — CDK constructs for Alchemy webhook lifecycle
-- `packages/cdk-alchemy-integrator/` — CDK construct for posting Alchemy events to Discord
-- `packages/examples/` — Example CDK stacks using both packages
+- `packages/examples/` — Example CDK stacks
 - `packages/docs/` — Docusaurus documentation site
 
 ### Construct Pattern
@@ -43,13 +42,11 @@ Each feature follows: `{Feature}Construct` class extending CDK `Construct`, with
 
 **Queues** (event handlers): Lambda functions that process incoming webhook events, retrieving credentials from Secrets Manager.
 
-**DiscordPoster**: Validates Alchemy HMAC-SHA256 signatures, renders mustache templates, posts to Discord.
-
-### Shared Utilities (per package)
+### Shared Utilities
 
 - `alchemy-utils.ts` — Alchemy SDK init, network validation, signature verification
 - `ssm-utils.ts` — AWS SSM Parameter Store access
-- `secrets-utils.ts` — AWS Secrets Manager operations (webhooks only)
+- `secrets-utils.ts` — AWS Secrets Manager operations
 
 ### Lambda Handler Convention
 

@@ -65,15 +65,6 @@ const config = {
             },
         ],
         [
-            '@docusaurus/plugin-content-docs',
-            {
-                id: 'alchy-integrator',
-                path: 'alchy-integrator',
-                routeBasePath: 'alchy-integrator',
-                sidebarPath: require.resolve('./sidebars.js'),
-            },
-        ],
-        [
             '@docusaurus/plugin-google-gtag',
             {
                 trackingID: process.env.GOOGLE_TRACKING_ID,
@@ -95,7 +86,6 @@ const config = {
                 },
                 items: [
                     {to: '/alchy-webhooks/intro', label: 'Alchy Webhooks', position: 'left'},
-                    {to: '/alchy-integrator/intro', label: 'Alchy Integrator', position: 'left'},
                     {
                         href: 'https://github.com/KovacZan/cdk-alchemy',
                         label: 'GitHub',
@@ -112,10 +102,6 @@ const config = {
                             {
                                 label: 'CDK Alchy Webhooks',
                                 to: '/alchy-webhooks/intro',
-                            },
-                            {
-                                label: 'CDK Alchy Integrator',
-                                to: '/alchy-integrator/intro',
                             },
                         ],
                     },

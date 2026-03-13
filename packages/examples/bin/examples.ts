@@ -6,8 +6,6 @@ import { NFTActivityStack } from "../lib/Initializers/NFTActivityStack";
 import { AddressActivityStack } from "../lib/Initializers/AddressActivityStack";
 import { CustomWebhookStack } from "../lib/Initializers/CustomWebhookStack";
 
-import { DiscordIntegratorStack } from "../lib/Integrator/DiscordIntegratorStack";
-
 import * as dotenv from "dotenv";
 import * as process from "process";
 
@@ -40,13 +38,4 @@ new CustomWebhookStack(app, "CustomWebhookStack", {
 	},
 	alchemyApiKey: process.env.ALCHEMY_API_KEY!,
 	alchemyAuthToken: process.env.ALCHEMY_AUTH_TOKEN!
-});
-
-new DiscordIntegratorStack(app, "DiscordIntegratorStack", {
-	env: {
-		account: process.env.CDK_DEFAULT_ACCOUNT,
-		region: process.env.CDK_DEFAULT_REGION
-	},
-	alchemySigningKey: process.env.ALCHEMY_SIGNING_KEY!,
-	discordWebhookUrl: process.env.DISCORD_WEBHOOK_URL!
 });
