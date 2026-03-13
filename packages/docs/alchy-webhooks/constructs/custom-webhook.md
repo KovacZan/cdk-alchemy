@@ -13,7 +13,7 @@ Alchemy Documentation About Custom Webhooks: https://docs.alchemy.com/reference/
 ## Usage
 
 ```typescript
-import { CustomWebhook, AlchemyCredential } from "@kovi-soft/cdk-alchemy-webhooks";
+import { CustomWebhook, AlchemyCredential, GraphqlQuerySource } from "@kovi-soft/cdk-alchemy-webhooks";
 
 new CustomWebhook(this, "CustomWebhookExample", {
 	alchemyApiKey: AlchemyCredential.fromPlainText("<your-alchemy-api-key>"),
@@ -39,6 +39,36 @@ new CustomWebhook(this, "CustomWebhookExample", {
 });
 ```
 
+## GraphQL Query Source
+
+The `alchemyGraphqlQuery` prop accepts either a plain string or an `IGraphqlQuerySource` instance, following the same pattern as `AlchemyCredential`.
+
+Use `GraphqlQuerySource.fromPlainText()` to pass the query inline (equivalent to passing a raw string):
+
+```typescript
+alchemyGraphqlQuery: GraphqlQuerySource.fromPlainText(`{
+	block {
+		hash
+		number
+	}
+}`)
+```
+
+Use `GraphqlQuerySource.fromSsmParameter()` to load the query from AWS SSM Parameter Store at deploy time. The construct automatically grants the Lambda function `ssm:GetParameter` permission on the specified parameter:
+
+```typescript
+import { CustomWebhook, AlchemyCredential, GraphqlQuerySource } from "@kovi-soft/cdk-alchemy-webhooks";
+
+new CustomWebhook(this, "CustomWebhookFromSsm", {
+	alchemyApiKey: AlchemyCredential.fromSsmParameter("/alchemy/api-key"),
+	alchemyNetwork: "eth-mainnet",
+	alchemyAuthToken: AlchemyCredential.fromSsmParameter("/alchemy/auth-token"),
+	alchemyWebhookDestinationUrl: "https://my-domain.com/destination-to-my-server",
+	alchemyWebhookName: "MyCustomWebhook",
+	alchemyGraphqlQuery: GraphqlQuerySource.fromSsmParameter("/my/graphql-query")
+});
+```
+
 ## Props
 
 | Prop | Type | Required | Description |
@@ -47,5 +77,5 @@ new CustomWebhook(this, "CustomWebhookExample", {
 | `alchemyNetwork` | `Network \| string` | Yes | Target blockchain network |
 | `alchemyAuthToken` | `string \| IAlchemyCredential` | Yes | Alchemy auth token |
 | `alchemyWebhookDestinationUrl` | `string` | Yes | URL to receive webhook events |
-| `alchemyGraphqlQuery` | `string` | Yes | GraphQL query defining the webhook payload |
+| `alchemyGraphqlQuery` | `string \| IGraphqlQuerySource` | Yes | GraphQL query defining the webhook payload |
 | `alchemyWebhookName` | `string` | No | Optional name for the webhook |

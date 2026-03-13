@@ -40,3 +40,12 @@ The `AlchemyCredential` abstraction lets you securely provide your Alchemy API k
 - AWS Secrets Manager
 
 See the [Credentials](./credential.md) page for details.
+
+### GraphQL Query Source
+
+For Custom Webhooks, the `GraphqlQuerySource` abstraction lets you provide your GraphQL query from multiple sources:
+
+- Plain text (inline string)
+- AWS SSM Parameter Store
+
+See the [Custom Webhook](./constructs/custom-webhook.md) page for details.
